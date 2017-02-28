@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,22 +23,77 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LQ-YZ-fIk" customClass="Card" customModule="Card" customModuleProvider="target">
-                                <rect key="frame" x="8" y="28" width="651" height="339"/>
+                                <rect key="frame" x="0.0" y="20" width="667" height="355"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.25490197539329529" green="0.25098040699958801" blue="0.25882354378700256" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="7LQ-YZ-fIk" secondAttribute="bottom" constant="8" id="RUM-xk-7iK"/>
-                            <constraint firstItem="7LQ-YZ-fIk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="TES-VV-uVX"/>
-                            <constraint firstItem="7LQ-YZ-fIk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="Tfp-4O-u9P"/>
-                            <constraint firstAttribute="trailing" secondItem="7LQ-YZ-fIk" secondAttribute="trailing" constant="8" id="scK-99-98S"/>
+                            <constraint firstAttribute="bottom" secondItem="7LQ-YZ-fIk" secondAttribute="bottom" id="RUM-xk-7iK"/>
+                            <constraint firstItem="7LQ-YZ-fIk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TES-VV-uVX"/>
+                            <constraint firstItem="7LQ-YZ-fIk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tfp-4O-u9P"/>
+                            <constraint firstAttribute="trailing" secondItem="7LQ-YZ-fIk" secondAttribute="trailing" id="scK-99-98S"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cardView" destination="7LQ-YZ-fIk" id="9YZ-C8-SY8"/>
+                        <outlet property="tableView" destination="0Ck-kA-pRK" id="fEH-dv-2J3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Ck-kA-pRK">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <prototypes>
+                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="questionCell" rowHeight="118" id="NXf-am-vvo" customClass="QuestionCell" customModule="Card" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="28" width="240" height="118"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NXf-am-vvo" id="P9c-bU-b1d">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="117"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUe-fY-J3b">
+                                        <rect key="frame" x="202" y="43" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="NZ6-Oj-z3o"/>
+                                            <constraint firstAttribute="width" constant="30" id="Ybk-c8-tpc"/>
+                                        </constraints>
+                                        <state key="normal" title="▷"/>
+                                        <connections>
+                                            <action selector="playTapped:" destination="NXf-am-vvo" eventType="touchUpInside" id="8Er-ut-Ya2"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQU-Dh-4y2">
+                                        <rect key="frame" x="8" y="8" width="189.5" height="101.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="tS3-G4-UTK"/>
+                                        </constraints>
+                                        <string key="text">LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="HQU-Dh-4y2" firstAttribute="leading" secondItem="P9c-bU-b1d" secondAttribute="leadingMargin" id="00R-ni-ox9"/>
+                                    <constraint firstItem="UUe-fY-J3b" firstAttribute="centerY" secondItem="P9c-bU-b1d" secondAttribute="centerY" id="Bpk-Kh-10k"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="HQU-Dh-4y2" secondAttribute="bottom" id="Q7b-6c-5u8"/>
+                                    <constraint firstItem="UUe-fY-J3b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HQU-Dh-4y2" secondAttribute="trailing" id="UBV-Xb-ogl"/>
+                                    <constraint firstItem="UUe-fY-J3b" firstAttribute="trailing" secondItem="P9c-bU-b1d" secondAttribute="trailingMargin" id="WZe-cv-Z3j"/>
+                                    <constraint firstItem="HQU-Dh-4y2" firstAttribute="top" secondItem="P9c-bU-b1d" secondAttribute="topMargin" id="cHM-WJ-Lio"/>
+                                </constraints>
+                            </tableViewCellContentView>
+                            <connections>
+                                <outlet property="playButton" destination="UUe-fY-J3b" id="gw0-eX-e3I"/>
+                                <outlet property="questionLabel" destination="HQU-Dh-4y2" id="BXq-0g-d4s"/>
+                            </connections>
+                        </tableViewCell>
+                    </prototypes>
+                    <connections>
+                        <outlet property="dataSource" destination="BYZ-38-t0r" id="di8-cO-l3z"/>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="tlj-vo-tZE"/>
+                    </connections>
+                </tableView>
             </objects>
         </scene>
     </scenes>

@@ -23,22 +23,30 @@ let kCardIndex = "kCardIndex"
 	@IBOutlet var completeCardButton:UIButton!
 	@IBOutlet var recordButton:UIButton!
 	@IBOutlet var playButton:UIButton!
+	@IBOutlet var historyButton:UIButton!
 	
 	var delegate:CardDelegate?
 	
 	
 	func xibSetup() {
+		
 		view = loadViewFromNib()
 		view.frame = bounds
 		view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
-		view.layer.cornerRadius = 8.0
 		view.layer.shadowOffset = CGSize(width: 5.0, height: 5.0);
 		view.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-		view.layer.borderColor = UIColor.black.cgColor
-		view.layer.borderWidth = 1.0
-		questions.unarchiveQuestions()
+		// for grey circles
+		/*
+		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton]
+		for button in buttons {
+			button?.layer.cornerRadius = 15.0
+			button?.layer.borderColor = UIColor.black.withAlphaComponent(0.05).cgColor
+			button?.layer.borderWidth = 1.0
+		}
+		*/
 		questions.delegate = self
-		questions.queue.append(contentsOf: Questions.questionList())
+		questions.unarchiveQuestions()
+		
 		setCardIndex(to: 0)
 		addSubview(view)
 	}
@@ -72,8 +80,8 @@ let kCardIndex = "kCardIndex"
 				questionLabel.text = questionLabel.text?.appending("\n\n♢ = Ask another couple")
 			}
 		}
-		currentCardLabel.text = "\(questions.queue.count) left"
-		completedLabel.text = "\(questions.done.count) done"
+		currentCardLabel.text = "\(questions.queue.count)"
+		completedLabel.text = "✓ \(questions.done.count)"
 		
 		// if its the first card, disable the previous button
 		prevCardButton.isEnabled = !(cardIndex + 1 == 1) && questions.queue.count > 0
@@ -94,26 +102,26 @@ let kCardIndex = "kCardIndex"
 		if (questions.queue.count > 0) {
 			questions.done.append(questions.queue[cardIndex])
 			questions.queue.remove(at: cardIndex)
+		} else {
+			queueEmpty()
 		}
 		setCardIndex(to: cardIndex)
 		questions.archiveQuestions()
+		self.delegate?.markAsCompleteTapped(card: self)
 	}
 	@IBAction func recordTapped(_ sender: UIButton) {
-		print("record tapped")
-		if let delegate = self.delegate {
-			delegate.recordTapped(card: self)
-		} else {
-			print("no delegate")
-		}
+		self.delegate?.recordTapped(card: self)
 	}
 	@IBAction func playTapped(_ sender: UIButton) {
-		print("play tapped")
-		if let delegate = self.delegate {
-			delegate.playTapped(card: self)
-		} else {
-			print("no delegate")
-		}
+		self.delegate?.playTapped(card: self)
 	}
+	@IBAction func addTapped(_ sender: UIButton) {
+		self.delegate?.addTapped(card: self)
+	}
+	@IBAction func historyTapped(_ sender: UIButton) {
+		self.delegate?.historyTapped(card: self)
+	}
+	// MARK: Questions Delegate
 	func questionsArchived() {
 		UserDefaults.standard.setValue(cardIndex, forKey: kCardIndex)
 	}
@@ -121,11 +129,29 @@ let kCardIndex = "kCardIndex"
 	func questionsUnarchived(questions: Questions) {
 		self.questions.queue = questions.queue
 		self.questions.done = questions.done
-		UserDefaults.standard.value(forKey: kCardIndex);
+		//self.questions.userEnteredQs = questions.userEnteredQs
+		if let cardIndex = UserDefaults.standard.value(forKey: kCardIndex) as? Int {
+			self.cardIndex = cardIndex
+		} else {
+			self.cardIndex = 0
+		}
+		if self.questions.queue.count == 0 {
+			queueEmpty()
+		}
+	}
+	
+	func queueEmpty() {
+		self.questionLabel.text = ""
+		self.recordButton.isEnabled = false
+		self.playButton.isEnabled = false
+		self.completeCardButton.isEnabled = false
 	}
 }
 
 protocol CardDelegate {
 	func recordTapped(card: Card)
 	func playTapped(card: Card)
+	func addTapped(card: Card)
+	func historyTapped(card: Card)
+	func markAsCompleteTapped(card: Card)
 }

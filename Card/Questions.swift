@@ -10,72 +10,98 @@ import Foundation
 
 let kQueue = "queue"
 let kDone = "done"
-let kQueueFilePath = "/questions/queue"
-let kDoneFilePath = "/questions/done"
-
+let kMaster = "master"
 
 class Questions: NSCoding {
+	
 	var queue: [String] = []
 	var done: [String] = []
+	var masterList: [String] = []
+	
 	var delegate:QuestionsDelegate?
 	init () {
 		queue = Questions.questionList()
+		masterList = Questions.questionList()
 	}
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(queue, forKey: kQueue)
 		aCoder.encode(done, forKey: kDone)
+		aCoder.encode(masterList, forKey: kMaster)
 	}
-	init(queue: [String], done: [String]) {
-		self.queue = queue
-		self.done = done
+	init(queue aQueue: [String], done aDone: [String], master aMaster: [String]) {
+		self.queue = aQueue
+		self.done = aDone
+		self.masterList = aMaster
+	}
+	func filePath(withComponent component: String)->String {
+		let manager = FileManager.default
+		let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first!
+		return url.appendingPathComponent(component).path
+	}
+	var queueFilePath : String {
+		return filePath(withComponent: kQueue)
+	}
+	var doneFilePath : String {
+		return filePath(withComponent: kDone)
+	}
+	var masterFilePath: String {
+		return filePath(withComponent: kMaster)
 	}
 	func archiveQuestions() {
-		if NSKeyedArchiver.archiveRootObject(queue, toFile: kQueueFilePath) {
+		if NSKeyedArchiver.archiveRootObject(queue, toFile: queueFilePath) {
 			print("archive queue success")
 		} else {
 			print("archive queue fail")
 		}
-		if NSKeyedArchiver.archiveRootObject(done, toFile: kDoneFilePath) {
+		if NSKeyedArchiver.archiveRootObject(done, toFile: doneFilePath) {
 			print("archive done success")
 		} else {
 			print("archive done fail")
 		}
-		if let delegate = self.delegate {
-			delegate.questionsArchived()
+		if NSKeyedArchiver.archiveRootObject(masterList, toFile: masterFilePath) {
+			print("archive master list success")
 		} else {
-			print("no delegate!")
+			print("archive master list fail")
 		}
+		self.delegate?.questionsArchived()
 	}
 	
 	func unarchiveQuestions() {
 		// MARK: Crash!!
-		if let unarchivedQueue = NSKeyedUnarchiver.unarchiveObject(withFile: kQueueFilePath) as? [String] {
+		if let unarchivedQueue = NSKeyedUnarchiver.unarchiveObject(withFile: queueFilePath) as? [String] {
 			queue = unarchivedQueue
 		} else {
 			print("unarchivedQueue nil")
 		}
 		
-		if let unarchivedDone = NSKeyedUnarchiver.unarchiveObject(withFile: kDoneFilePath) as? [String] {
+		if let unarchivedDone = NSKeyedUnarchiver.unarchiveObject(withFile: doneFilePath) as? [String] {
 			done = unarchivedDone
 		} else {
 			print("unarchivedDone nil")
 		}
 		
-		if let delegate = self.delegate {
-			delegate.questionsUnarchived(questions: self)
+		if let unarchivedMasterList = NSKeyedUnarchiver.unarchiveObject(withFile: masterFilePath) as? [String] {
+			masterList = unarchivedMasterList
 		} else {
-			print("no delegate!")
+			print("unarchivedMaster nil")
 		}
 		
+		self.delegate?.questionsUnarchived(questions: self)
 	}
 	required convenience init?(coder aDecoder: NSCoder) {
 		guard
 			let queue = aDecoder.decodeObject(forKey: kQueue) as? [String],
-			let done = aDecoder.decodeObject(forKey: kDone) as? [String]
+			let done = aDecoder.decodeObject(forKey: kDone) as? [String],
+			let masterList = aDecoder.decodeObject(forKey: kMaster) as? [String]
 			else { return nil }
 		
 		self.init(queue: queue,
-		          done: done)
+		          done: done,
+		          master: masterList)
+	}
+	
+	func absoluteIndex(forCardText cardText: String)->Int {
+		return masterList.index(of: cardText)!
 	}
 	class func questionList()->[String] {
 		return [
@@ -237,4 +263,5 @@ class Questions: NSCoding {
 protocol QuestionsDelegate {
 	func questionsArchived()
 	func questionsUnarchived(questions: Questions)
+	func queueEmpty()
 }
