@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Card" customModule="Card" customModuleProvider="target">
             <connections>
+                <outlet property="addCardButton" destination="mG3-AN-UJI" id="b4B-oV-CpZ"/>
                 <outlet property="completeCardButton" destination="vCR-lQ-8pQ" id="Fdx-Ga-hGn"/>
                 <outlet property="completedLabel" destination="316-yb-4kd" id="4YP-up-RYV"/>
                 <outlet property="currentCardLabel" destination="dNN-Jd-UyR" id="Pgp-3A-NJc"/>
@@ -31,6 +29,7 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WFS-sb-kdL">
                     <rect key="frame" x="171" y="54" width="33.5" height="167"/>
+                    <gestureRecognizers/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -38,6 +37,7 @@
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsM-Pl-OmE">
                     <rect key="frame" x="32" y="221" width="30" height="30"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="JCE-0x-3e5"/>
                         <constraint firstAttribute="height" constant="30" id="h6Q-yy-N5v"/>
@@ -85,7 +85,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNN-Jd-UyR">
-                    <rect key="frame" x="37" y="24" width="20.5" height="30"/>
+                    <rect key="frame" x="36.5" y="24" width="20.5" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="ABl-dy-Tt2"/>
                         <constraint firstAttribute="height" constant="30" id="zx2-x8-hWA"/>
@@ -148,7 +148,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wdb-cm-5UN">
-                    <rect key="frame" x="47.5" y="54" width="0.0" height="30"/>
+                    <rect key="frame" x="47" y="54" width="0.0" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="5yc-Fk-dWk"/>
                     </constraints>
@@ -169,6 +169,7 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="Wdb-cm-5UN" firstAttribute="centerX" secondItem="dNN-Jd-UyR" secondAttribute="centerX" id="5vf-Ch-mpe"/>
                 <constraint firstItem="316-yb-4kd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="trailing" multiplier="14:16" id="6Za-HW-gCB"/>

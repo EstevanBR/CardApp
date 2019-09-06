@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Card.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>0F11FED5E22095843BE45BFB9205ED519C41AF08</string>
+				<key>dateExpires</key>
+				<string>9/15/18</string>
+				<key>type</key>
+				<string>iOS Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>L6T8QV3DHS.com.toiletsnakes.Card</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>L6T8QV3DHS</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>L6T8QV3DHS.com.toiletsnakes.Card</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>Card.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>6bc87c2e-8d28-4e1f-9473-077596026b2a</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>L6T8QV3DHS</string>
+				<key>name</key>
+				<string>Blue Rocket, Inc</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

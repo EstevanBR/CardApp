@@ -10,10 +10,10 @@ import UIKit
 
 let kCardIndex = "kCardIndex"
 
-@IBDesignable class Card: UIView, QuestionsDelegate {
+@IBDesignable class Card: UIView {
 	var view:UIView!
 	var cardIndex:Int = 0
-	let questions:Questions = Questions()
+	let questions:Questions = sharedQuestions
 	@IBOutlet var questionLabel:UILabel!
 	@IBOutlet var currentCardLabel:UILabel!
 	@IBOutlet var completedLabel:UILabel!
@@ -24,6 +24,7 @@ let kCardIndex = "kCardIndex"
 	@IBOutlet var recordButton:UIButton!
 	@IBOutlet var playButton:UIButton!
 	@IBOutlet var historyButton:UIButton!
+	@IBOutlet weak var addCardButton: UIButton!
 	
 	var delegate:CardDelegate?
 	
@@ -32,9 +33,10 @@ let kCardIndex = "kCardIndex"
 		
 		view = loadViewFromNib()
 		view.frame = bounds
-		view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+		view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
 		view.layer.shadowOffset = CGSize(width: 5.0, height: 5.0);
 		view.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+		view.layer.cornerRadius = 3
 		// for grey circles
 		/*
 		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton]
@@ -44,11 +46,26 @@ let kCardIndex = "kCardIndex"
 			button?.layer.borderWidth = 1.0
 		}
 		*/
-		questions.delegate = self
+		questions.register(callBack: questionsUnarchived)
+		questions.register(callBack: questionsArchived)
 		questions.unarchiveQuestions()
 		
 		setCardIndex(to: 0)
 		addSubview(view)
+		setupAccessibilityIDs()
+	}
+	
+	func setupAccessibilityIDs() {
+		self.playButton.accessibilityIdentifier = AccessibilityIDs.playButton
+		self.recordButton.accessibilityIdentifier = AccessibilityIDs.recordButton
+		self.nextCardButton.accessibilityIdentifier = AccessibilityIDs.nextCardButton
+		self.prevCardButton.accessibilityIdentifier = AccessibilityIDs.prevCardButton
+		self.completeCardButton.accessibilityIdentifier = AccessibilityIDs.completeCardButton
+		self.completedLabel.accessibilityIdentifier = AccessibilityIDs.completedCardLabel
+		self.historyButton.accessibilityIdentifier = AccessibilityIDs.historyButton
+		self.questionLabel.accessibilityIdentifier = AccessibilityIDs.questionLabel
+		
+		self.addCardButton.accessibilityIdentifier = AccessibilityIDs.addCardButton
 	}
 	func loadViewFromNib() -> UIView {
 		let bundle = Bundle(for: type(of: self))
@@ -81,7 +98,7 @@ let kCardIndex = "kCardIndex"
 			}
 		}
 		currentCardLabel.text = "\(questions.queue.count)"
-		completedLabel.text = "✓ \(questions.done.count)"
+		completedLabel.text = "\(ButtonTitles.checkmark) \(questions.done.count)"
 		
 		// if its the first card, disable the previous button
 		prevCardButton.isEnabled = !(cardIndex + 1 == 1) && questions.queue.count > 0
@@ -126,7 +143,7 @@ let kCardIndex = "kCardIndex"
 		UserDefaults.standard.setValue(cardIndex, forKey: kCardIndex)
 	}
 	
-	func questionsUnarchived(questions: Questions) {
+	func questionsUnarchived() {
 		self.questions.queue = questions.queue
 		self.questions.done = questions.done
 		//self.questions.userEnteredQs = questions.userEnteredQs

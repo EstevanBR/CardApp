@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iwl-rM-sBk">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="eNy-dX-z1r">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="iwl-rM-sBk" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6lq-UB-8nb">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aVv-Y3-xRc">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="flT-CN-qFD" kind="relationship" relationship="rootViewController" id="PDw-mu-gYo"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qT7-t4-uHG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1690" y="1"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Card" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43i-lC-jbU" customClass="Card" customModule="Card" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="43i-lC-jbU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKH-Vp-ZcH"/>
+                            <constraint firstAttribute="trailing" secondItem="43i-lC-jbU" secondAttribute="trailing" id="fes-1u-f7I"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="43i-lC-jbU" secondAttribute="bottom" id="jMy-cW-yb6"/>
+                            <constraint firstItem="43i-lC-jbU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="l85-fm-uwC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="iF7-u6-8sh">
+                        <barButtonItem key="backBarButtonItem" id="5sZ-F6-OVJ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cardView" destination="43i-lC-jbU" id="vMx-I9-ODF"/>
+                        <segue destination="flT-CN-qFD" kind="show" identifier="questionSegue" id="Xtj-tS-WWb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--QuestionsTableViewController-->
+        <scene sceneID="5aw-u6-Lv6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="QuestionsTableViewController" id="flT-CN-qFD" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="NR4-ja-Adi"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yUM-2P-2Zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="44" y="510"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Xtj-tS-WWb"/>
+    </inferredMetricsTieBreakers>
+</document>

@@ -9,21 +9,23 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UITableViewDelegate, UITableViewDataSource, QuestionCellDelegate {
-	var audioRecorder: AVAudioRecorder!// = AVAudioRecorder()
-	var audioPlayer: AVAudioPlayer!// = AVAudioPlayer()
+class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UIGestureRecognizerDelegate {
+	var audioRecorder: AVAudioRecorder!
+	var audioPlayer: AVAudioPlayer!
 	var recordingSession: AVAudioSession! = AVAudioSession.sharedInstance()
+	
+	let questionSegue:String = "questionSegue"
 
 	@IBOutlet var cardView: Card!
-	@IBOutlet var tableView: UITableView!
+	//@IBOutlet var tableView: UITableView!
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
 		cardView.delegate = self
+		cardView.layer.cornerRadius = 16.0
 		//UIApplication.shared.delegate = self
 		do {
 			//try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-			try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.defaultToSpeaker)
+			try recordingSession.setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playAndRecord)), mode: AVAudioSession.Mode.default)
 			try recordingSession.setActive(true)
 			recordingSession.requestRecordPermission() { [unowned self] allowed in
 				DispatchQueue.main.async {
@@ -39,14 +41,28 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 		} catch {
 			// failed to record!
 			var alert: UIAlertController!
-			alert = UIAlertController(title: "Error!", message: "Failed to record", preferredStyle: UIAlertControllerStyle.alert)
+			alert = UIAlertController(title: "Error!", message: "Failed to record", preferredStyle: UIAlertController.Style.alert)
 			show(alert, sender: self)
 		}
+		
+		
 	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		self.navigationController?.setNavigationBarHidden(true, animated: false)
+		self.view.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		UIView.animate(withDuration: 0.25, animations: {
+			self.view.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
+		})
+	}
+	override func viewWillDisappear(_ animated: Bool) {
+		UIView.animate(withDuration: 0.25, animations: {
+			self.view.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+		})
 	}
 	
 	func startRecording() {
@@ -63,7 +79,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 			audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
 			audioRecorder.delegate = self
 			audioRecorder.record()
-			cardView.recordButton.setTitle("☐", for: .normal)
+			cardView.recordButton.setTitle(ButtonTitles.stop, for: .normal)
 		} catch {
 			finishRecording(success: false)
 		}
@@ -78,9 +94,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 		audioRecorder = nil
 		
 		if success {
-			cardView.recordButton.setTitle("⃝", for: .normal)
+			cardView.recordButton.setTitle(ButtonTitles.record, for: .normal)
 		} else {
-			cardView.recordButton.setTitle("⃝", for: .normal)
+			cardView.recordButton.setTitle(ButtonTitles.record, for: .normal)
 			// recording failed :(
 		}
 		cardView.playButton.isEnabled = true
@@ -93,9 +109,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 		}
 		
 		if success {
-			cardView.playButton.setTitle("▷", for: .normal)
+			cardView.playButton.setTitle(ButtonTitles.play, for: .normal)
 		} else {
-			cardView.playButton.setTitle("▷", for: .normal)
+			cardView.playButton.setTitle(ButtonTitles.play, for: .normal)
 		}
 		cardView.recordButton.isEnabled = true
 	}
@@ -108,7 +124,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 			audioPlayer.delegate = self
 			audioPlayer.setVolume(1.0, fadeDuration: 0)
 			audioPlayer.play()
-			cardView.playButton.setTitle("☐", for: .normal)
+			cardView.playButton.setTitle(ButtonTitles.stop, for: .normal)
 		} catch {
 			stopPlaying(success: false)
 		}
@@ -126,6 +142,39 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 	}
 	
 	func playTapped(card: Card) {
+		let alertVC = UIAlertController.init(title: "Audio Output", message: "Choose Audio Output Device", preferredStyle: .actionSheet)
+		
+		alertVC.addAction(UIAlertAction.init(title: "Default", style: .default, handler: { (action) in
+			do {
+				let session = AVAudioSession.sharedInstance()
+				try session.overrideOutputAudioPort(.none)
+				self.play(card: card)
+			} catch let error {
+				self.showError(message: error.localizedDescription)
+			}
+		}))
+		alertVC.addAction(UIAlertAction.init(title: "Speaker", style: .default, handler: { (action) in
+			do {
+				let session = AVAudioSession.sharedInstance()
+				try session.overrideOutputAudioPort(.speaker)
+				self.play(card: card)
+			} catch let error{
+				self.showError(message: error.localizedDescription)
+			}
+		}))
+		//show(alertVC, sender: self)
+		present(alertVC, animated: false) {
+			//<#code#>
+		}
+	}
+	
+	func showError(message: String) {
+		let errorVC = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert)
+		errorVC.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler:nil))
+		show(errorVC, sender: self)
+	}
+	
+	func play(card: Card) {
 		if audioPlayer == nil {
 			card.recordButton.isEnabled = false
 			startPlaying(answerForQuestion: self.cardView.questionLabel.text!)
@@ -136,12 +185,11 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 	}
 	
 	func addTapped(card: Card) {
-		print("")
-		let alert = UIAlertController(title: "+", message: "", preferredStyle: .alert)
+		let alert = UIAlertController(title: ButtonTitles.add, message: "", preferredStyle: .alert)
 		alert.addTextField { (textField) in
 			textField.placeholder = "?"
 		}
-		let okAction = UIAlertAction(title: "✓", style: .default) { (action) in
+		let okAction = UIAlertAction(title: ButtonTitles.checkmark, style: .default) { (action) in
 			if let textFields = alert.textFields {
 				if textFields.count > 0 {
 					if let text = textFields[0].text {
@@ -150,7 +198,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 						card.questions.masterList.append(text)
 						card.setCardIndex(to: card.cardIndex)
 						card.questions.archiveQuestions()
-						self.tableView.reloadData()
+						//self.tableView.reloadData()
 					}
 				}
 			}
@@ -167,18 +215,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 		}
 	}
 	func historyTapped(card: Card) {
-		print("history tapped")
-		if self.view.subviews.contains(self.tableView) {
-			self.tableView.removeFromSuperview()
-			self.cardView.historyButton?.setTitle("⌛︎", for: .normal)
-		} else {
-			self.view.addSubview(self.tableView)
-			self.tableView.frame = CGRect(x: 16, y: 30+16+8, width: self.view.frame.size.width-32, height: self.view.frame.size.height-(30+32+8))
-			self.cardView.historyButton?.setTitle("ⅹ", for: .normal)
+		//performSegue(withIdentifier: questionSegue, sender: self)
+		dismiss(animated: true) {
+			sharedQuestions.unarchiveQuestions()
 		}
 	}
 	func markAsCompleteTapped(card: Card) {
-		self.tableView.reloadData()
+		//self.tableView.reloadData()
 	}
 	// MARK: AVAudioRecorderDelegate
 	func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
@@ -194,37 +237,28 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
 			stopPlaying(success: true)
 		}
 	}
-	// MARK: UITableViewDelegate
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.cardView.questions.done.count
+	
+	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+		return true
 	}
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+	@IBAction func swipe(_ sender: UISwipeGestureRecognizer) {
+		if sender.direction == .down {
+			dismiss(animated: true, completion: nil)
+		}
 	}
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		//
-	}
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let questionCell:QuestionCell = (tableView.dequeueReusableCell(withIdentifier: "questionCell", for: indexPath) as? QuestionCell)!
-		questionCell.questionLabel.text = self.cardView.questions.done[indexPath.row]
-		questionCell.delegate = self
-		return questionCell
-	}
+	
+	
+	
 	//MARK: QuestionCellDelegate
-	func playTapped(questionCell: QuestionCell) {
-		self.startPlaying(answerForQuestion: questionCell.questionLabel.text!)
-	}
+//	func playTapped(questionCell: QuestionCell) {
+//		self.startPlaying(answerForQuestion: questionCell.questionLabel.text!)
+//	}
 }
 
-class QuestionCell: UITableViewCell {
-	@IBOutlet var questionLabel:UILabel!
-	@IBOutlet var playButton:UIButton!
-	var delegate: QuestionCellDelegate?
-	@IBAction func playTapped(_ sender: UIButton) {
-		self.delegate?.playTapped(questionCell: self)
-	}
-}
-protocol QuestionCellDelegate {
-	func playTapped(questionCell: QuestionCell)
-}
 
+
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}

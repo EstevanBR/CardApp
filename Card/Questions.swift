@@ -12,13 +12,21 @@ let kQueue = "queue"
 let kDone = "done"
 let kMaster = "master"
 
+let sharedQuestions = Questions.init()
+
 class Questions: NSCoding {
+	
+	fileprivate var callbacks:[()->()] = []
+	
+	func register(callBack:@escaping ()->()) {
+		callbacks.append(callBack)
+	}
 	
 	var queue: [String] = []
 	var done: [String] = []
 	var masterList: [String] = []
 	
-	var delegate:QuestionsDelegate?
+	//var delegate:QuestionsDelegate?
 	init () {
 		queue = Questions.questionList()
 		masterList = Questions.questionList()
@@ -48,45 +56,72 @@ class Questions: NSCoding {
 		return filePath(withComponent: kMaster)
 	}
 	func archiveQuestions() {
-		if NSKeyedArchiver.archiveRootObject(queue, toFile: queueFilePath) {
-			print("archive queue success")
-		} else {
-			print("archive queue fail")
+		do {
+			let data = try NSKeyedArchiver.archivedData(withRootObject: queue, requiringSecureCoding: false)
+			let url:URL = URL(fileURLWithPath: queueFilePath)
+			try data.write(to: url)
+		} catch {
+			print("\(error.localizedDescription)")
 		}
-		if NSKeyedArchiver.archiveRootObject(done, toFile: doneFilePath) {
-			print("archive done success")
-		} else {
-			print("archive done fail")
+		
+		do {
+			let data = try NSKeyedArchiver.archivedData(withRootObject: done, requiringSecureCoding: false)
+			let url:URL = URL(fileURLWithPath: doneFilePath)
+			try data.write(to: url)
+		} catch {
+			print("\(error.localizedDescription)")
 		}
-		if NSKeyedArchiver.archiveRootObject(masterList, toFile: masterFilePath) {
-			print("archive master list success")
-		} else {
-			print("archive master list fail")
+		
+		do {
+			let data = try NSKeyedArchiver.archivedData(withRootObject: masterList, requiringSecureCoding: false)
+			let url:URL = URL(fileURLWithPath: masterFilePath)
+			try data.write(to: url)
+		} catch {
+			print("\(error.localizedDescription)")
 		}
-		self.delegate?.questionsArchived()
+		
+		triggerCallbacks()
 	}
 	
 	func unarchiveQuestions() {
 		// MARK: Crash!!
-		if let unarchivedQueue = NSKeyedUnarchiver.unarchiveObject(withFile: queueFilePath) as? [String] {
-			queue = unarchivedQueue
-		} else {
-			print("unarchivedQueue nil")
+		
+		do {
+			let data = NSData.init(contentsOf: URL(fileURLWithPath: queueFilePath))
+			guard data != nil, let array:[String] = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data! as Data) as? [String] else {
+				return
+			}
+			queue = array
+		} catch {
+			print("\(error.localizedDescription)")
 		}
 		
-		if let unarchivedDone = NSKeyedUnarchiver.unarchiveObject(withFile: doneFilePath) as? [String] {
-			done = unarchivedDone
-		} else {
-			print("unarchivedDone nil")
+		do {
+			let data = NSData.init(contentsOf: URL(fileURLWithPath: doneFilePath))
+			guard data != nil, let array:[String] = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data! as Data) as? [String] else {
+				return
+			}
+			done = array
+		} catch {
+			print("\(error.localizedDescription)")
 		}
 		
-		if let unarchivedMasterList = NSKeyedUnarchiver.unarchiveObject(withFile: masterFilePath) as? [String] {
-			masterList = unarchivedMasterList
-		} else {
-			print("unarchivedMaster nil")
+		do {
+			let data = NSData.init(contentsOf: URL(fileURLWithPath: masterFilePath))
+			guard data != nil, let array:[String] = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data! as Data) as? [String] else {
+				return
+			}
+			masterList = array
+		} catch {
+			print("\(error.localizedDescription)")
 		}
 		
-		self.delegate?.questionsUnarchived(questions: self)
+		triggerCallbacks()
+	}
+	fileprivate func triggerCallbacks() {
+		for callback in callbacks {
+			callback()
+		}
 	}
 	required convenience init?(coder aDecoder: NSCoder) {
 		guard
@@ -259,9 +294,9 @@ class Questions: NSCoding {
 		]
 	}
 }
-
-protocol QuestionsDelegate {
-	func questionsArchived()
-	func questionsUnarchived(questions: Questions)
-	func queueEmpty()
-}
+//
+//protocol QuestionsDelegate {
+//	func questionsArchived()
+//	//func questionsUnarchived(questions: Questions)
+//	func queueEmpty()
+//}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Card View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="CardViewController" customModule="Card" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43i-lC-jbU" customClass="Card" customModule="Card" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="E7i-OC-gmb" appends="YES" id="io3-Zv-74y"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="43i-lC-jbU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JKH-Vp-ZcH"/>
+                            <constraint firstAttribute="trailing" secondItem="43i-lC-jbU" secondAttribute="trailing" id="fes-1u-f7I"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="43i-lC-jbU" secondAttribute="bottom" id="jMy-cW-yb6"/>
+                            <constraint firstItem="43i-lC-jbU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="l85-fm-uwC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="iF7-u6-8sh">
+                        <barButtonItem key="backBarButtonItem" id="5sZ-F6-OVJ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cardView" destination="43i-lC-jbU" id="vMx-I9-ODF"/>
+                        <segue destination="flT-CN-qFD" kind="presentation" identifier="questionSegue" modalTransitionStyle="flipHorizontal" id="Xtj-tS-WWb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="E7i-OC-gmb">
+                    <connections>
+                        <action selector="swipe:" destination="BYZ-38-t0r" id="dWp-HS-BrB"/>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="6a1-Qs-XCR"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+        </scene>
+        <!--QuestionsTableViewController-->
+        <scene sceneID="5aw-u6-Lv6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="QuestionsTableViewController" id="flT-CN-qFD" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="NR4-ja-Adi"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yUM-2P-2Zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="44" y="510"/>
+        </scene>
+    </scenes>
+</document>
