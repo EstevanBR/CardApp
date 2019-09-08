@@ -61,7 +61,7 @@ class CardUITests: XCTestCase {
 		
 		
 		let app = XCUIApplication()
-		app.tables/*@START_MENU_TOKEN@*/.staticTexts["Answer a Question"]/*[[".cells[\"answerCell\"].staticTexts[\"Answer a Question\"]",".staticTexts[\"Answer a Question\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+		app.tables.staticTexts["Answer a Question"].tap()
 		
 		let playbuttonButton = app.buttons["playButton"]
 		app.tap()
@@ -117,9 +117,23 @@ class CardUITests: XCTestCase {
 	
 	func testTapPlayInQuestionCell() {
 		
-		XCUIApplication().tables.cells.containing(.staticText, identifier:"What do you imagine an average night at our place would be?").buttons["▷"].tap()
+		XCUIApplication().tables.cells.containing(.staticText, identifier:"question 1?").buttons["▷"].tap()
 		
 		
+	}
+	
+	func testExhaustQuestions() {
+		return
+		
+		let app = XCUIApplication()
+		app.tables.staticTexts["Answer a Question"].tap()
+		
+		let completecardbuttonButton = app.buttons["completeCardButton"]
+		var count = 10
+		while(count > 0) {
+			completecardbuttonButton.tap()
+			count -= 1
+		}
 	}
 	
 	func wait(for duration: TimeInterval) {

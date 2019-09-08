@@ -64,7 +64,7 @@ let kCardIndex = "kCardIndex"
 		self.completedLabel.accessibilityIdentifier = AccessibilityIDs.completedCardLabel
 		self.historyButton.accessibilityIdentifier = AccessibilityIDs.historyButton
 		self.questionLabel.accessibilityIdentifier = AccessibilityIDs.questionLabel
-		
+		self.currentCardLabel.accessibilityIdentifier = AccessibilityIDs.currentCardLabel
 		self.addCardButton.accessibilityIdentifier = AccessibilityIDs.addCardButton
 	}
 	func loadViewFromNib() -> UIView {

@@ -138,7 +138,20 @@ class Questions: NSCoding {
 	func absoluteIndex(forCardText cardText: String)->Int {
 		return masterList.index(of: cardText)!
 	}
+	
+	class func isRunningTests() -> Bool {
+		let env: [String: String] = ProcessInfo.processInfo.environment
+		return env["XCInjectBundleInto"] != nil
+	}
 	class func questionList()->[String] {
+		#if DEBUG
+		return [
+			"question 1?",
+			"question 2?",
+			"question 3?",
+			"question 4?"
+		]
+		#else
 		return [
 			"What do you imagine an average night at our place would be?",
 			"What do you most admire about me?",
@@ -292,6 +305,7 @@ class Questions: NSCoding {
 			"Where do you want us to live?",
 			"Would you want me to jump in front of traffic to save a child?"
 		]
+		#endif
 	}
 }
 //

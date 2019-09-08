@@ -76,9 +76,9 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate 
 		self.tableView.reloadData()
 	}
 	
-	func queueEmpty() {
-		self.tableView.reloadData()
-	}
+//	func queueEmpty() {
+//		self.tableView.reloadData()
+//	}
 }
 
 class QuestionCell: UITableViewCell {

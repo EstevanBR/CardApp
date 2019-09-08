@@ -55,11 +55,15 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
 		UIView.animate(withDuration: 0.25, animations: {
 			self.view.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25)
 		})
 	}
 	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
 		UIView.animate(withDuration: 0.25, animations: {
 			self.view.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
 		})
