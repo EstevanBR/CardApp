@@ -9,84 +9,93 @@
 import XCTest
 
 class CardUITests: XCTestCase {
-	let app = XCUIApplication()
-	
+	let recordingDuration:TimeInterval = 5.0
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
 		
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+		XCUIApplication().launch()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
     func testArrows() {
-		app.tables.cells.firstMatch.tap()
 		
-		let nextcardbuttonButton = app.buttons[AccessibilityIDs.nextCardButton]
-		let previouscardbuttonButton = app.buttons[AccessibilityIDs.prevCardButton]
+		let app = XCUIApplication()
+		app.tables.staticTexts["Answer a Question"].tap()
 		
-		//XCTAssert(previouscardbuttonButton.staticTexts[ButtonTitles.leftArrow].exists)
-		//XCTAssert(nextcardbuttonButton.staticTexts[ButtonTitles.rightArrow].exists)
+		sleep(1)
+		XCTAssertFalse(app.buttons["previousCardButton"].isEnabled)
+		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
 		
-		XCTAssert(!previouscardbuttonButton.isEnabled)
+		app.buttons["nextCardButton"].tap()
 		
-		nextcardbuttonButton.tap()
-		XCTAssert(previouscardbuttonButton.isEnabled)
-		XCTAssert(nextcardbuttonButton.isEnabled)
+		sleep(1)
+		XCTAssertTrue(app.buttons["previousCardButton"].isEnabled)
+		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
 		
-		previouscardbuttonButton.tap()
-		XCTAssert(!previouscardbuttonButton.isEnabled)
+		app.buttons["previousCardButton"].tap()
+		sleep(1)
+		XCTAssertFalse(app.buttons["previousCardButton"].isEnabled)
+		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
 		
     }
 	func testRecord() {
-		app.tables.cells.firstMatch.tap()
+		let app = XCUIApplication()
+		app.tables.staticTexts["Answer a Question"].tap()
 		
 		let recordButton = app.buttons[AccessibilityIDs.recordButton]
-		//XCTAssert(recordButton.title == ButtonTitles.record)
+		
+		app.tap()
+		
 		recordButton.tap()
-		//XCTAssert(recordButton.title == ButtonTitles.stop)
-		sleep(10)
+		
+		wait(for: recordingDuration)
+		//sleep(duration)
+		
 		recordButton.tap()
-		//XCTAssert(recordButton.title == ButtonTitles.record)
 	}
 	func testPlay() {
-		app.tables.cells.firstMatch.tap()
 		
-		XCUIApplication()/*@START_MENU_TOKEN@*/.buttons["playButton"]/*[[".buttons[\"▷\"]",".buttons[\"playButton\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
 		
-		//XCUIApplication()/*@START_MENU_TOKEN@*/.buttons["playButton"]/*[[".buttons[\"▷\"]",".buttons[\"playButton\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+		let app = XCUIApplication()
+		app.tables/*@START_MENU_TOKEN@*/.staticTexts["Answer a Question"]/*[[".cells[\"answerCell\"].staticTexts[\"Answer a Question\"]",".staticTexts[\"Answer a Question\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
 		
-//		let playButton = app.buttons[AccessibilityIDs.playButton]
-//		playButton.tap()
-//
-//		let audioOutputSheet = app.sheets["Audio Output"]
-//		let defaultButton = audioOutputSheet.buttons["Default"]
-//		defaultButton.tap()
-//
-//		sleep(12)
-//		playButton.tap()
-//
-//		let speakerButton = audioOutputSheet.buttons["Speaker"]
-//		speakerButton.tap()
-//		playButton.tap()
-//		defaultButton.tap()
-//		playButton.tap()
-//		speakerButton.tap()
+		let playbuttonButton = app.buttons["playButton"]
+		app.tap()
+		playbuttonButton.tap()
+		
+		let audioOutputSheet = app.sheets["Audio Output"]
+		let defaultButton = audioOutputSheet.buttons["Default"]
+		app.tap()
+		defaultButton.waitForExistence(timeout: 2.0)
+		defaultButton.tap()
+		
+		app.tap()
+		wait(for: recordingDuration + 1.0)
+		
+		playbuttonButton.tap()
+		app.tap()
+		audioOutputSheet.buttons["Speaker"].tap()
+		
+		app.tap()
+		wait(for: recordingDuration / 2)
+		
+		app.buttons["playButton"].tap()
+		defaultButton.tap()
+	}
+	
+	func testRecordAndPlay() {
+		testRecord()
+		XCUIApplication().swipeDown()
+		testPlay()
 	}
 	
 	func testMarkCardAsCompleted() {
-		app.tables.cells.firstMatch.tap()
+		let app = XCUIApplication()
+		app.tables.staticTexts["Answer a Question"].tap()
 		
 		let completeButton = app.buttons[AccessibilityIDs.completeCardButton]
 		completeButton.tap()
@@ -97,6 +106,8 @@ class CardUITests: XCTestCase {
 	}
 	
 	func testAppStates() {
+		let app = XCUIApplication()
+
 		app.terminate()
 		app.launch()
 		
@@ -104,32 +115,22 @@ class CardUITests: XCTestCase {
 		app.activate()
 	}
 	
-	func testAddCard() {
-		app.tables.cells.firstMatch.tap()
+	func testTapPlayInQuestionCell() {
 		
-		let app = XCUIApplication()
-		let button = app.buttons[AccessibilityIDs.addCardButton]
-		button.tap()
-		
-		let alert = app.alerts[ButtonTitles.add]
-		alert.textFields.firstMatch.typeText("test1234")
-		alert.buttons[ButtonTitles.checkmark].tap()
-		
-		button.tap()
-		alert.textFields.firstMatch.typeText("test4321")
-		alert.buttons["ⅹ"].tap()
+		XCUIApplication().tables.cells.containing(.staticText, identifier:"What do you imagine an average night at our place would be?").buttons["▷"].tap()
 		
 		
 	}
 	
-	func testTapHistory() {
-		app.tables/*@START_MENU_TOKEN@*/.buttons["▷"]/*[[".cells[\"questionCell\"].buttons[\"▷\"]",".buttons[\"▷\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.firstMatch.tap()
-		app.navigationBars["Card.QuestionsTableView"].buttons["Back"].tap()
-		
-	}
-	
-	func testRecordAndPlayAudio() {
-		testRecord()
-		testPlay()
+	func wait(for duration: TimeInterval) {
+		let waitExpectation = expectation(description: "Waiting")
+		waitExpectation.isInverted = true
+		waitExpectation.expectedFulfillmentCount = 1
+		//waitForExpectations(timeout: duration)
+		let result = XCTWaiter.wait(for: [waitExpectation], timeout: duration)
+		if result == .timedOut {
+			print("time")
+			return
+		}
 	}
 }
