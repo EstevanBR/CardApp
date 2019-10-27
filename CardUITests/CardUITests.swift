@@ -22,87 +22,53 @@ class CardUITests: XCTestCase {
     }
 
     func testArrows() {
-		
-		let app = XCUIApplication()
-		app.tables.staticTexts["Answer a Question"].tap()
-		
-		sleep(1)
-		XCTAssertFalse(app.buttons["previousCardButton"].isEnabled)
-		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
-		
-		app.buttons["nextCardButton"].tap()
-		
-		sleep(1)
-		XCTAssertTrue(app.buttons["previousCardButton"].isEnabled)
-		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
-		
-		app.buttons["previousCardButton"].tap()
-		sleep(1)
-		XCTAssertFalse(app.buttons["previousCardButton"].isEnabled)
-		XCTAssertTrue(app.buttons["nextCardButton"].isEnabled)
-		
+		QuestionsPage()
+			.tapAnswerCell()
+			.tapNextCardButton()
+			.tapNextCardButton()
+			.tapNextCardButton()
+			.tapNextCardButton()
+			.tapNextCardButton()
+			.tapNextCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.tapPreviousCardButton()
+			.end()
     }
 	func testRecord() {
-		let app = XCUIApplication()
-		app.tables.staticTexts["Answer a Question"].tap()
-		
-		let recordButton = app.buttons[AccessibilityIDs.recordButton]
-		
-		app.tap()
-		
-		recordButton.tap()
-		
-		wait(for: recordingDuration)
-		//sleep(duration)
-		
-		recordButton.tap()
+		QuestionsPage()
+			.tapAnswerCell()
+			.wait(for: recordingDuration, before: {
+				CardPage().tapRecordButton()
+			}, after: {
+				CardPage().tapRecordButton()
+			})
+		CardPage().dismissViewSwipe()
 	}
 	func testPlay() {
-		
-		
-		let app = XCUIApplication()
-		app.tables.staticTexts["Answer a Question"].tap()
-		
-		let playbuttonButton = app.buttons["playButton"]
-		app.tap()
-		playbuttonButton.tap()
-		
-		let audioOutputSheet = app.sheets["Audio Output"]
-		let defaultButton = audioOutputSheet.buttons["Default"]
-		app.tap()
-		defaultButton.waitForExistence(timeout: 2.0)
-		defaultButton.tap()
-		
-		app.tap()
-		wait(for: recordingDuration + 1.0)
-		
-		playbuttonButton.tap()
-		app.tap()
-		audioOutputSheet.buttons["Speaker"].tap()
-		
-		app.tap()
-		wait(for: recordingDuration / 2)
-		
-		app.buttons["playButton"].tap()
-		defaultButton.tap()
+		QuestionsPage()
+			.tapAnswerCell()
+			.tapPlayButton()
+			.tapDefault()
+			.tapPlayButton()
+			.tapSpeakerButton()
+			.end()
 	}
 	
 	func testRecordAndPlay() {
 		testRecord()
-		XCUIApplication().swipeDown()
 		testPlay()
 	}
 	
 	func testMarkCardAsCompleted() {
-		let app = XCUIApplication()
-		app.tables.staticTexts["Answer a Question"].tap()
-		
-		let completeButton = app.buttons[AccessibilityIDs.completeCardButton]
-		completeButton.tap()
-		
-		let historyButton = app.buttons[AccessibilityIDs.historyButton]
-		historyButton.tap()
-		
+		QuestionsPage()
+			.tapAnswerCell()
+			.tapCompleteCardButton()
+			.end()
 	}
 	
 	func testAppStates() {
@@ -116,35 +82,124 @@ class CardUITests: XCTestCase {
 	}
 	
 	func testTapPlayInQuestionCell() {
-		
-		XCUIApplication().tables.cells.containing(.staticText, identifier:"question 1?").buttons["▷"].tap()
-		
-		
-	}
-	
-	func testExhaustQuestions() {
-		return
-		
-		let app = XCUIApplication()
-		app.tables.staticTexts["Answer a Question"].tap()
-		
-		let completecardbuttonButton = app.buttons["completeCardButton"]
-		var count = 10
-		while(count > 0) {
-			completecardbuttonButton.tap()
-			count -= 1
-		}
-	}
-	
-	func wait(for duration: TimeInterval) {
-		let waitExpectation = expectation(description: "Waiting")
-		waitExpectation.isInverted = true
-		waitExpectation.expectedFulfillmentCount = 1
-		//waitForExpectations(timeout: duration)
-		let result = XCTWaiter.wait(for: [waitExpectation], timeout: duration)
-		if result == .timedOut {
-			print("time")
-			return
-		}
+		QuestionsPage().tapQuestionCellPlayButton()
 	}
 }
+
+protocol Page {
+	var root:String { get }
+	var element:XCUIElement { get }
+}
+
+extension Page {
+	var app:XCUIApplication {
+		return XCUIApplication()
+	}
+	
+	var element: XCUIElement {
+		return app.otherElements[root]
+	}
+	
+	func wait(for duration: TimeInterval, before: ()->Void, after: ()->Void) -> Page {
+		app.tap()
+		before()
+		RunLoop.current.run(until: Date.init(timeIntervalSinceNow: duration))
+		after()
+		return self
+	}
+	
+	func tap(buttonWithAccessibilityIdentifier accessibilityIdentifier:String) {
+		element.buttons[accessibilityIdentifier].tap()
+	}
+	func tap(cellWithAccessibilityIdentifier accessibilityIdentifier:String) {
+		element.cells[accessibilityIdentifier].tap()
+	}
+	func end() {
+		
+	}
+}
+
+
+class CardPage:Page {
+	var root:String = "CardView.view"
+	private var prevCardButton = "CardView.prevCardButton"
+	private var nextCardButton = "CardView.nextCardButton"
+	private var completeCardButton = "CardView.completeCardButton"
+	private var recordButton = "CardView.recordButton"
+	private var playButton = "CardView.playButton"
+	private var historyButton = "CardView.historyButton"
+	private var addCardButton = "CardView.addCardButton"
+	
+	func tapPlayButton() -> AudioOutputPage {
+		tap(buttonWithAccessibilityIdentifier: playButton)
+		return AudioOutputPage()
+	}
+	
+	func tapRecordButton() -> CardPage {
+		tap(buttonWithAccessibilityIdentifier: recordButton)
+		return CardPage()
+	}
+	
+	func tapNextCardButton() -> CardPage {
+		tap(buttonWithAccessibilityIdentifier: nextCardButton)
+		return CardPage()
+	}
+	
+	func tapPreviousCardButton() -> CardPage{
+		tap(buttonWithAccessibilityIdentifier: prevCardButton)
+		return CardPage()
+	}
+	
+	func dismissViewSwipe()->QuestionsPage {
+		element.swipeDown()
+		return QuestionsPage()
+	}
+	
+	func tapCompleteCardButton() -> CardPage {
+		tap(buttonWithAccessibilityIdentifier: completeCardButton)
+		return CardPage()
+	}
+}
+
+class QuestionsPage: Page {
+	var root: String = "QuestionsTableViewController.tableView"
+	var element: XCUIElement {
+		return app.tables[root]
+	}
+	
+	private var questionCell = "QuestionCell.view"
+	private var questionCellPlayButton = "QuestionCell.playButton"
+	private var answerCell = "AnswerCell.view"
+	
+	func tapAnswerCell() -> CardPage{
+		tap(cellWithAccessibilityIdentifier: answerCell)
+		return CardPage()
+	}
+	func tapQuestionCell() -> QuestionsPage {
+		tap(cellWithAccessibilityIdentifier: questionCell)
+		return QuestionsPage()
+	}
+	func tapQuestionCellPlayButton() -> QuestionsPage {
+		tap(buttonWithAccessibilityIdentifier: questionCellPlayButton)
+		return QuestionsPage()
+	}
+}
+
+class AudioOutputPage: Page {
+	var root: String = "Audio Output"
+	private var defaultButton = "Default"
+	private var speakerButton = "Speaker"
+	
+	var element: XCUIElement {
+		return app.sheets[root]
+	}
+	func tapDefault() -> CardPage {
+		element.buttons[defaultButton].tap()
+		return CardPage()
+	}
+	func tapSpeakerButton() -> CardPage {
+		element.buttons[speakerButton].tap()
+		return CardPage()
+	}
+}
+

@@ -3,14 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D023D6FA2319FE0E00EAC9DA /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3DD952314BCA40076372D /* Accessibility.swift */; };
+		D0142DD8236296C200FCB76C /* UIView+AAID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142DD7236296C200FCB76C /* UIView+AAID.swift */; };
+		D023D6FA2319FE0E00EAC9DA /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3DD952314BCA40076372D /* Accessibility.swift */; platformFilter = ios; };
 		D023D6FC231A033E00EAC9DA /* ButtonTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */; };
-		D023D6FE231A05C400EAC9DA /* CardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0480F981F0723820064C217 /* CardUITests.swift */; };
-		D023D6FF231A05C800EAC9DA /* ButtonTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */; };
+		D023D6FE231A05C400EAC9DA /* CardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0480F981F0723820064C217 /* CardUITests.swift */; platformFilter = ios; };
+		D023D6FF231A05C800EAC9DA /* ButtonTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */; platformFilter = ios; };
 		D023D701231A24A200EAC9DA /* QuestionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D700231A24A200EAC9DA /* QuestionsTableViewController.swift */; };
 		D023D704231A24E000EAC9DA /* QuestionsTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D023D702231A24E000EAC9DA /* QuestionsTableViewController.storyboard */; };
 		D023D706231B77FA00EAC9DA /* CardViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D023D705231B77FA00EAC9DA /* CardViewController.storyboard */; };
@@ -20,7 +21,7 @@
 		D06CFDEF1E09D9D20079D7CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D06CFDED1E09D9D20079D7CF /* LaunchScreen.storyboard */; };
 		D06CFDF81E09DA130079D7CF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D06CFDF71E09DA130079D7CF /* AVFoundation.framework */; };
 		D06CFDFA1E0A0DD20079D7CF /* Card.xib in Resources */ = {isa = PBXBuildFile; fileRef = D06CFDF91E0A0DD20079D7CF /* Card.xib */; };
-		D06CFDFC1E0A0DED0079D7CF /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CFDFB1E0A0DED0079D7CF /* Card.swift */; };
+		D06CFDFC1E0A0DED0079D7CF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CFDFB1E0A0DED0079D7CF /* CardView.swift */; };
 		D0D3DD962314BCA40076372D /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3DD952314BCA40076372D /* Accessibility.swift */; };
 		D0F396D81E1489C400E8020A /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F396D71E1489C400E8020A /* Questions.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D0142DD7236296C200FCB76C /* UIView+AAID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AAID.swift"; sourceTree = "<group>"; };
 		D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTitles.swift; sourceTree = "<group>"; };
 		D023D700231A24A200EAC9DA /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsTableViewController.swift; sourceTree = "<group>"; };
 		D023D703231A24E000EAC9DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Card/Base.lproj/QuestionsTableViewController.storyboard; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 		D0480F961F0723820064C217 /* CardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0480F981F0723820064C217 /* CardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardUITests.swift; sourceTree = "<group>"; };
 		D0480F9A1F0723820064C217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D06CA70E236142B800610444 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D06CFDE11E09D9D20079D7CF /* Card.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Card.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D06CFDE41E09D9D20079D7CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D06CFDE61E09D9D20079D7CF /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -51,7 +54,7 @@
 		D06CFDF01E09D9D20079D7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D06CFDF71E09DA130079D7CF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D06CFDF91E0A0DD20079D7CF /* Card.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Card.xib; sourceTree = "<group>"; };
-		D06CFDFB1E0A0DED0079D7CF /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		D06CFDFB1E0A0DED0079D7CF /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		D0D3DD952314BCA40076372D /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		D0F396D71E1489C400E8020A /* Questions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D0142DD6236296A400FCB76C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D0142DD7236296C200FCB76C /* UIView+AAID.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		D0480F971F0723820064C217 /* CardUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,12 +117,13 @@
 		D06CFDE31E09D9D20079D7CF /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				D0142DD6236296A400FCB76C /* Categories */,
 				D023D705231B77FA00EAC9DA /* CardViewController.storyboard */,
 				D023D702231A24E000EAC9DA /* QuestionsTableViewController.storyboard */,
 				D06CFDE41E09D9D20079D7CF /* AppDelegate.swift */,
 				D06CFDE61E09D9D20079D7CF /* CardViewController.swift */,
 				D06CFDF91E0A0DD20079D7CF /* Card.xib */,
-				D06CFDFB1E0A0DED0079D7CF /* Card.swift */,
+				D06CFDFB1E0A0DED0079D7CF /* CardView.swift */,
 				D0F396D71E1489C400E8020A /* Questions.swift */,
 				D06CFDEB1E09D9D20079D7CF /* Assets.xcassets */,
 				D06CFDED1E09D9D20079D7CF /* LaunchScreen.storyboard */,
@@ -126,6 +138,7 @@
 		D06CFDF61E09DA130079D7CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D06CA70E236142B800610444 /* XCTest.framework */,
 				D06CFDF71E09DA130079D7CF /* AVFoundation.framework */,
 			);
 			name = Frameworks;
@@ -175,21 +188,21 @@
 		D06CFDD91E09D9D10079D7CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Estevan Hernandez";
 				TargetAttributes = {
 					D0480F951F0723820064C217 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = XA987QDW58;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D06CFDE01E09D9D10079D7CF;
 					};
 					D06CFDE01E09D9D10079D7CF = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = XA987QDW58;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -253,8 +266,9 @@
 			files = (
 				D023D701231A24A200EAC9DA /* QuestionsTableViewController.swift in Sources */,
 				D06CFDE71E09D9D20079D7CF /* CardViewController.swift in Sources */,
-				D06CFDFC1E0A0DED0079D7CF /* Card.swift in Sources */,
+				D06CFDFC1E0A0DED0079D7CF /* CardView.swift in Sources */,
 				D06CFDE51E09D9D20079D7CF /* AppDelegate.swift in Sources */,
+				D0142DD8236296C200FCB76C /* UIView+AAID.swift in Sources */,
 				D0D3DD962314BCA40076372D /* Accessibility.swift in Sources */,
 				D023D6FC231A033E00EAC9DA /* ButtonTitles.swift in Sources */,
 				D0F396D81E1489C400E8020A /* Questions.swift in Sources */,
@@ -266,6 +280,7 @@
 /* Begin PBXTargetDependency section */
 		D0480F9C1F0723820064C217 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = D06CFDE01E09D9D10079D7CF /* Card */;
 			targetProxy = D0480F9B1F0723820064C217 /* PBXContainerItemProxy */;
 		};
@@ -298,10 +313,14 @@
 				DEVELOPMENT_TEAM = XA987QDW58;
 				INFOPLIST_FILE = CardUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.CardUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = Card;
 			};
 			name = Debug;
@@ -313,10 +332,14 @@
 				DEVELOPMENT_TEAM = XA987QDW58;
 				INFOPLIST_FILE = CardUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.CardUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = Card;
 			};
 			name = Release;
@@ -424,7 +447,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -439,12 +463,15 @@
 				DEVELOPMENT_TEAM = XA987QDW58;
 				INFOPLIST_FILE = Card/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.toiletsnakes.Card;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -458,11 +485,14 @@
 				DEVELOPMENT_TEAM = XA987QDW58;
 				INFOPLIST_FILE = Card/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.toiletsnakes.Card;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -8,10 +8,16 @@
 
 import Foundation
 import UIKit
+import os.log
 
-class QuestionsTableViewController: UITableViewController, QuestionCellDelegate {
-	
-	let questions:Questions = sharedQuestions
+class QuestionsTableViewController: UITableViewController, QuestionCellDelegate, CustomReflectable {
+
+	public var customMirror: Mirror {
+		return Mirror(self, children:[
+			"tableView": tableView!
+		])
+	}
+	let questions:Questions = Questions.shared
 	let questionCell = "questionCell"
 	let answerCell = "answerCell"
 	
@@ -20,6 +26,10 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate 
 		
 		questions.register(callBack: questionsUnarchived)
 		questions.register(callBack: questionsArchived)
+		//debugAccessibility()
+		
+		//view.injectAccessibilityIdentifiers()
+		injectAccessibilityIdentifiers()
 	}
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -47,13 +57,14 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate 
 	}
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 1 {
-			let questionCell:QuestionCell = (tableView.dequeueReusableCell(withIdentifier: "questionCell", for: indexPath) as? QuestionCell)!
-			questionCell.questionLabel.text = questions.done[indexPath.row]
-			questionCell.delegate = self
-			return questionCell
+			let cell:QuestionCell = (tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as? QuestionCell)!
+			cell.questionLabel.text = questions.done[indexPath.row]
+			cell.delegate = self
+			cell.injectAccessibilityIdentifiers()
+			return cell
 		} else {
-			let cell = tableView.dequeueReusableCell(withIdentifier: answerCell, for: indexPath)
-			cell.accessibilityIdentifier = answerCell
+			let cell:AnswerCell = (tableView.dequeueReusableCell(withIdentifier: answerCell, for: indexPath) as? AnswerCell)!
+			cell.injectAccessibilityIdentifiers()
 			return cell
 		}
 	}
@@ -75,26 +86,38 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate 
 	func questionsUnarchived() {
 		self.tableView.reloadData()
 	}
-	
-//	func queueEmpty() {
-//		self.tableView.reloadData()
-//	}
 }
 
 class QuestionCell: UITableViewCell {
+	
 	@IBOutlet var questionLabel:UILabel!
 	@IBOutlet var playButton:UIButton!
+	
 	var delegate: QuestionCellDelegate?
 	@IBAction func playTapped(_ sender: UIButton) {
 		self.delegate?.playTapped(questionCell: self)
 	}
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		accessibilityIdentifier = AccessibilityIDs.questionCell
-		isAccessibilityElement = false
-		accessibilityElements = [questionLabel, playButton]
+}
+
+extension QuestionCell: CustomReflectable {
+	var customMirror: Mirror {
+		return Mirror(self, children:[
+			"view":self,
+			"questionLabel":questionLabel!,
+			"playButton":playButton!
+		])
 	}
 }
+
 protocol QuestionCellDelegate {
 	func playTapped(questionCell: QuestionCell)
+}
+
+class AnswerCell:UITableViewCell,CustomReflectable {
+	var customMirror: Mirror {
+		return Mirror(self, children:[
+			"view":self,
+			"textLabel":textLabel!
+		])
+	}
 }

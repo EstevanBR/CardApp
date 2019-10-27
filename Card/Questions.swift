@@ -12,10 +12,9 @@ let kQueue = "queue"
 let kDone = "done"
 let kMaster = "master"
 
-let sharedQuestions = Questions.init()
-
 class Questions: NSCoding {
-	
+	static let shared = Questions()
+
 	fileprivate var callbacks:[()->()] = []
 	
 	func register(callBack:@escaping ()->()) {
@@ -27,7 +26,7 @@ class Questions: NSCoding {
 	var masterList: [String] = []
 	
 	//var delegate:QuestionsDelegate?
-	init () {
+	private init () {
 		queue = Questions.questionList()
 		masterList = Questions.questionList()
 	}
@@ -136,7 +135,7 @@ class Questions: NSCoding {
 	}
 	
 	func absoluteIndex(forCardText cardText: String)->Int {
-		return masterList.index(of: cardText)!
+		return masterList.firstIndex(of: cardText)!
 	}
 	
 	class func isRunningTests() -> Bool {

@@ -8,12 +8,20 @@
 
 import UIKit
 
-let kCardIndex = "kCardIndex"
 
-@IBDesignable class Card: UIView {
+
+@IBDesignable class CardView: UIView {
+	func setupAccessibilityHeirarchy() {
+		// TODO: use this?
+	}
+	
+	fileprivate let kCardIndex = "kCardIndex"
+	
 	var view:UIView!
 	var cardIndex:Int = 0
-	let questions:Questions = sharedQuestions
+	
+	let questions:Questions = Questions.shared
+	
 	@IBOutlet var questionLabel:UILabel!
 	@IBOutlet var currentCardLabel:UILabel!
 	@IBOutlet var completedLabel:UILabel!
@@ -52,20 +60,8 @@ let kCardIndex = "kCardIndex"
 		
 		setCardIndex(to: 0)
 		addSubview(view)
-		setupAccessibilityIDs()
-	}
-	
-	func setupAccessibilityIDs() {
-		self.playButton.accessibilityIdentifier = AccessibilityIDs.playButton
-		self.recordButton.accessibilityIdentifier = AccessibilityIDs.recordButton
-		self.nextCardButton.accessibilityIdentifier = AccessibilityIDs.nextCardButton
-		self.prevCardButton.accessibilityIdentifier = AccessibilityIDs.prevCardButton
-		self.completeCardButton.accessibilityIdentifier = AccessibilityIDs.completeCardButton
-		self.completedLabel.accessibilityIdentifier = AccessibilityIDs.completedCardLabel
-		self.historyButton.accessibilityIdentifier = AccessibilityIDs.historyButton
-		self.questionLabel.accessibilityIdentifier = AccessibilityIDs.questionLabel
-		self.currentCardLabel.accessibilityIdentifier = AccessibilityIDs.currentCardLabel
-		self.addCardButton.accessibilityIdentifier = AccessibilityIDs.addCardButton
+
+		injectAccessibilityIdentifiers()
 	}
 	func loadViewFromNib() -> UIView {
 		let bundle = Bundle(for: type(of: self))
@@ -166,9 +162,9 @@ let kCardIndex = "kCardIndex"
 }
 
 protocol CardDelegate {
-	func recordTapped(card: Card)
-	func playTapped(card: Card)
-	func addTapped(card: Card)
-	func historyTapped(card: Card)
-	func markAsCompleteTapped(card: Card)
+	func recordTapped(card: CardView)
+	func playTapped(card: CardView)
+	func addTapped(card: CardView)
+	func historyTapped(card: CardView)
+	func markAsCompleteTapped(card: CardView)
 }

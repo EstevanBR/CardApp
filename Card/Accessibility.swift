@@ -7,18 +7,21 @@
 //
 
 import Foundation
+import UIKit
 
-struct AccessibilityIDs {
-	static let recordButton = "recordButton"
-	static let playButton = "playButton"
-	static let nextCardButton = "nextCardButton"
-	static let prevCardButton = "previousCardButton"
-	static let questionLabel = "questionLabel"
-	static let currentCardLabel = "currentCardLabel"
-	static let completedCardLabel = "completedCardLabel"
-	static let completeCardButton = "completeCardButton"
-	static let historyButton = "historyButton"
-	static let questionCell = "questionCell"
-	static let answerCell = "answerCell"
-	static let addCardButton = "addCardButton"
+enum AccessibilityIDs:String {
+	case cardView = "cardView"
+	case recordButton = "recordButton"
+	case playButton = "playButton"
+	case nextCardButton = "nextCardButton"
+	case prevCardButton = "previousCardButton"
+	case questionLabel = "questionLabel"
+	case currentCardLabel = "currentCardLabel"
+	case completedCardLabel = "completedCardLabel"
+	case completeCardButton = "completeCardButton"
+	case historyView = "historyPage"
+	case historyButton = "historyButton"
+	case questionCell = "questionCell"
+	case answerCell = "answerCell"
+	case addCardButton = "addCardButton"
 }
