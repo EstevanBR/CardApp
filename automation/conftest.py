@@ -21,7 +21,7 @@ def desired_capabilities() -> dict:
         "newCommandTimeout": 10,
         "autoLaunch": False,
         "isHeadless": False,
-        "usePrebuiltWDA": True
+        "usePrebuiltWDA": False
     }
     logging.debug(f"desired_capabilities\n{desired_capabilities}")
     return desired_capabilities

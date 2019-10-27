@@ -9,33 +9,19 @@
 import UIKit
 import AVFoundation
 
-class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UIGestureRecognizerDelegate, CustomReflectable {
+class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UIGestureRecognizerDelegate {
 	var audioRecorder: AVAudioRecorder!
 	var audioPlayer: AVAudioPlayer!
 	var recordingSession: AVAudioSession! = AVAudioSession.sharedInstance()
 	
-	var audioPlaybackAlertController:UIAlertController?
-	
-	var customMirror: Mirror {
-		if let audio_view:UIView = audioPlaybackAlertController?.view! {
-			return Mirror(self, children:[
-				"view":cardView!,
-				"audioAlert":audio_view
-			])
-		} else {
-			return Mirror(self, children:[
-				"view":cardView!
-			])
-		}
-		
-	}
-	
 	let questionSegue:String = "questionSegue"
 
 	@IBOutlet var cardView: CardView!
-	//@IBOutlet var tableView: UITableView!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		injectAccessibilityIdentifiers()
 		
 		cardView.delegate = self
 		cardView.layer.cornerRadius = 16.0
@@ -60,10 +46,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 			var alert: UIAlertController!
 			alert = UIAlertController(title: "Error!", message: "Failed to record", preferredStyle: UIAlertController.Style.alert)
 			show(alert, sender: self)
-			alert.injectAccessibilityIdentifiers()
 		}
-		injectAccessibilityIdentifiers()
-		
 		
 	}
 	override func viewWillAppear(_ animated: Bool) {
@@ -165,9 +148,10 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 	}
 	
 	func playTapped(card: CardView) {
-		audioPlaybackAlertController = UIAlertController.init(title: "Audio Output", message: "Choose Audio Output Device", preferredStyle: .actionSheet)
+		let audioPlaybackAlertController = UIAlertController.init(title: "Audio Output", message: "Choose Audio Output Device", preferredStyle: .actionSheet)
 		
-		audioPlaybackAlertController!.addAction(UIAlertAction.init(title: "Default", style: .default, handler: { (action) in
+		
+		audioPlaybackAlertController.addAction(UIAlertAction.init(title: "Default", style: .default, handler: { (action) in
 			do {
 				let session = AVAudioSession.sharedInstance()
 				try session.overrideOutputAudioPort(.none)
@@ -176,7 +160,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 				self.showError(message: error.localizedDescription)
 			}
 		}))
-		audioPlaybackAlertController!.addAction(UIAlertAction.init(title: "Speaker", style: .default, handler: { (action) in
+		audioPlaybackAlertController.addAction(UIAlertAction.init(title: "Speaker", style: .default, handler: { (action) in
 			do {
 				let session = AVAudioSession.sharedInstance()
 				try session.overrideOutputAudioPort(.speaker)
@@ -185,15 +169,14 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 				self.showError(message: error.localizedDescription)
 			}
 		}))
-		present(audioPlaybackAlertController!, animated: false) {
-			self.injectAccessibilityIdentifiers()
+		present(audioPlaybackAlertController, animated: false) {
 		}
+		show(audioPlaybackAlertController, sender:self)
 	}
 	
 	func showError(message: String) {
 		let errorVC = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert)
 		errorVC.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler:nil))
-		errorVC.injectAccessibilityIdentifiers()
 		show(errorVC, sender: self)
 	}
 	
@@ -269,31 +252,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 			dismiss(animated: true, completion: nil)
 		}
 	}
-	
-	
-	
-	//MARK: QuestionCellDelegate
-//	func playTapped(questionCell: QuestionCell) {
-//		self.startPlaying(answerForQuestion: questionCell.questionLabel.text!)
-//	}
 }
-
-//class AudioOutputAlertController: UIAlertController, CustomReflectable {
-//	var customMirror: Mirror {
-//		var children:[String: Any] = [:]
-//
-//		children["view"] = self.view as Any
-//
-//		for action in actions {
-//			children[action.title!] = action
-//		}
-//
-//		return Mirror(self, children: ["view": self.view as Any])
-//	}
-//}s
-
-
-
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {

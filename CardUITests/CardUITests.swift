@@ -57,8 +57,12 @@ class CardUITests: XCTestCase {
 			.tapPlayButton()
 			.tapSpeakerButton()
 			.end()
+		
+		
+				
+		
 	}
-	
+
 	func testRecordAndPlay() {
 		testRecord()
 		testPlay()
@@ -79,10 +83,6 @@ class CardUITests: XCTestCase {
 		
 		XCUIDevice.shared.press(.home)
 		app.activate()
-	}
-	
-	func testTapPlayInQuestionCell() {
-		QuestionsPage().tapQuestionCellPlayButton()
 	}
 }
 
@@ -109,10 +109,10 @@ extension Page {
 	}
 	
 	func tap(buttonWithAccessibilityIdentifier accessibilityIdentifier:String) {
-		element.buttons[accessibilityIdentifier].tap()
+		app.buttons[accessibilityIdentifier].tap()
 	}
 	func tap(cellWithAccessibilityIdentifier accessibilityIdentifier:String) {
-		element.cells[accessibilityIdentifier].tap()
+		app.tables.cells[accessibilityIdentifier].tap()
 	}
 	func end() {
 		
@@ -180,7 +180,8 @@ class QuestionsPage: Page {
 		return QuestionsPage()
 	}
 	func tapQuestionCellPlayButton() -> QuestionsPage {
-		tap(buttonWithAccessibilityIdentifier: questionCellPlayButton)
+		app.buttons[questionCellPlayButton].tap()
+		
 		return QuestionsPage()
 	}
 }
@@ -191,14 +192,15 @@ class AudioOutputPage: Page {
 	private var speakerButton = "Speaker"
 	
 	var element: XCUIElement {
-		return app.sheets[root]
+		return app.sheets.firstMatch
 	}
 	func tapDefault() -> CardPage {
-		element.buttons[defaultButton].tap()
+		app.buttons.element(matching: NSPredicate(format: "\"\(defaultButton)\" IN titles")).tap()
+		//app.buttons[defaultButton].tap()
 		return CardPage()
 	}
 	func tapSpeakerButton() -> CardPage {
-		element.buttons[speakerButton].tap()
+		
 		return CardPage()
 	}
 }

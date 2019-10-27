@@ -3,7 +3,7 @@ from page.page import Page as Page
 
 
 class QuestionsPage(Page):
-    root: str = "QuestionsTableViewController.tableView"
+    identifier: str = "QuestionsTableViewController.tableView"
 
     def tap_answer_cell(self) -> CardPage:
         from pages.card_page import CardPage

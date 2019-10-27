@@ -9,15 +9,14 @@ import time
 
 class Page:
     driver: WebDriver = None
-    root: str
-    element: WebElement
+    identifier: str = None
 
     @classmethod
     def Page(driver: WebDriver):
         driver = driver
 
     def __init__(self):
-        self.element: WebElement = Page.driver.find_element_by_accessibility_id(self.root)
+        self.element: WebElement = Page.driver.find_element_by_accessibility_id(self.identifier)
         assert self.element.is_displayed()
 
     def sleep(self, duration: float):

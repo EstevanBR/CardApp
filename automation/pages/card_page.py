@@ -3,7 +3,7 @@ from page.page import Page as Page
 
 
 class CardPage(Page):
-    root: str = "CardView.view"
+    identifier: str = "CardView.view"
     questionLabel: str = "CardView.questionLabel"
     currentCardLabel: str = "CardView.currentCardLabel"
     completedLabel: str = "CardView.completedLabel"
