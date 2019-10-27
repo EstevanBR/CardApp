@@ -8,6 +8,7 @@ from appium.webdriver.webdriver import WebDriver
 
 from pages.questions_page import QuestionsPage
 from pages.card_page import CardPage
+from pages.question_cell_page import QuestionCellPage
 
 
 class TestCardPage:
@@ -64,4 +65,16 @@ class TestCardPage:
             .tap_answer_cell()
             .dismiss_via_swipe()
         )
+        assert QuestionsPage()
+
+    def test_question_cell_play_button(self):
+        (
+            QuestionCellPage()
+            .tap_play_button()
+        )
+        assert QuestionsPage()
+
+    def test_tap_question_cell(self):
+        QuestionsPage().tap_question_cell()
+        QuestionCellPage().tap()
         assert QuestionsPage()

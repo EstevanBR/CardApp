@@ -8,7 +8,13 @@ class QuestionsPage(Page):
     def tap_answer_cell(self) -> CardPage:
         from pages.card_page import CardPage
         from pages.answer_cell_page import AnswerCellPage
+
         AnswerCellPage().tap()
 
         return CardPage()
 
+    def tap_question_cell(self) -> QuestionsPage:
+        from pages.question_cell_page import QuestionCellPage
+
+        QuestionCellPage().tap()
+        return QuestionsPage()
