@@ -8,16 +8,6 @@ import time
 
 
 class Page:
-    """
-
-    Page class
-
-    Attributes:
-        driver: Webdriver
-        element: WebElement
-
-    """
-
     driver: WebDriver = None
     root: str
     element: WebElement

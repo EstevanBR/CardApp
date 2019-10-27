@@ -25,6 +25,7 @@ class CardPage(Page):
 
     def tap_play_button(self) -> PlaybackAlertPage:
         from pages.playback_alert_page import PlaybackAlertPage
+
         self.driver.find_element_by_accessibility_id(self.playButton).click()
         return PlaybackAlertPage()
 
@@ -35,3 +36,9 @@ class CardPage(Page):
     def tap_history_button(self) -> CardPage:
         self.driver.find_element_by_accessibility_id(self.historyButton).click()
         return self
+
+    def dismiss_via_swipe(self) -> QuestionsPage:
+        from pages.questions_page import QuestionsPage
+
+        self.driver.execute_script("mobile: swipe", {"direction": "down"})
+        return QuestionsPage()

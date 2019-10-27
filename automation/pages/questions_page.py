@@ -2,9 +2,13 @@ from __future__ import annotations
 from page.page import Page as Page
 
 
-class HistoryPage(Page):
+class QuestionsPage(Page):
     root: str = "QuestionsTableViewController.tableView"
 
-    def get_answer_cell(self) -> AnswerCellPage:
+    def tap_answer_cell(self) -> CardPage:
+        from pages.card_page import CardPage
         from pages.answer_cell_page import AnswerCellPage
-        return AnswerCellPage()
+        AnswerCellPage().tap()
+
+        return CardPage()
+

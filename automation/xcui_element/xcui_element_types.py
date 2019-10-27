@@ -1,4 +1,4 @@
-class Types:
+class XCUIElementType:
     ActivityIndicator = "XCUIElementTypeActivityIndicator"
     Alert = "XCUIElementTypeAlert"
     Any = "XCUIElementTypeAny"

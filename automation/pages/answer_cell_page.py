@@ -1,5 +1,5 @@
 from __future__ import annotations
-from page.page import Page as Page
+from page.page import Page
 
 
 class AnswerCellPage(Page):
@@ -8,5 +8,5 @@ class AnswerCellPage(Page):
 
     def tap(self) -> CardPage:
         from pages.card_page import CardPage
-        self.driver.find_element_by_accessibility_id(AnswerCellPage.root).click()
+        self.element.click()
         return CardPage()
