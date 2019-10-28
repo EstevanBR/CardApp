@@ -20,7 +20,7 @@ def desired_capabilities() -> dict:
         "newCommandTimeout": 10,
         "autoLaunch": False,
         "isHeadless": False,
-        "usePrebuiltWDA": True,
+        "usePrebuiltWDA": False,
         "processArguments": {
             "args": [
                 "RESET"
