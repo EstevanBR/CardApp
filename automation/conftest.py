@@ -17,10 +17,10 @@ def desired_capabilities() -> dict:
         "platformVersion": "13.0",
         "platformName": "iOS",
         "noReset": True,
-        "newCommandTimeout": 10,
+        "newCommandTimeout": 60,
         "autoLaunch": False,
-        "isHeadless": False,
-        "usePrebuiltWDA": False,
+        # "isHeadless": False,
+        # "usePrebuiltWDA": False,
         "processArguments": {
             "args": [
                 "RESET"
