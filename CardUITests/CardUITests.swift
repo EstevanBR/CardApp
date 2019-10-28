@@ -53,19 +53,6 @@ class CardUITests: XCTestCase {
 			.getQuestionText()
 		XCTAssertNotEqual(firstQuestionText, secondQuestionText, "Question text did not change")
 	}
-//	func testCardNumberChangesWhenTappingArrows() {
-//		print("This isn't actually a feature :D")
-//		return
-//		let before:Int = QuestionsPage()
-//			.tapAnswerCell()
-//			.getCurrentCardNumber()
-//
-//		let after:Int = CardPage()
-//			.tapNextCardButton()
-//			.getCurrentCardNumber()
-//
-//		XCTAssertGreaterThan(after, before, "Card number did not change")
-//	}
 	
 	func testCompletedCardsCountChangesWhenCompletingCard() {
 		let beforeCount:Int = QuestionsPage()
@@ -144,5 +131,25 @@ class CardUITests: XCTestCase {
 		}, after: {
 			_ = CardPage().tapPlayButton()
 		})
+	}
+	
+	func testAddCardButton() {
+		_ = QuestionsPage()
+			.tapAnswerCell()
+			.tapAddCardbutton()
+		
+		XCTAssertEqual(app.alerts.firstMatch.label, ButtonTitles.add)
+		XCTAssertTrue(app.alerts.firstMatch.buttons[ButtonTitles.checkmark].exists)
+		XCTAssertTrue(app.alerts.firstMatch.buttons[ButtonTitles.close].exists)
+	}
+	
+	func testFinishPlaying() {
+		testRecord()
+		_ = QuestionsPage()
+			.tapAnswerCell()
+			.wait(for: recordingDuration, before: {
+				_ = CardPage().tapPlayButton()
+			})
+		
 	}
 }

@@ -33,9 +33,7 @@ class CardPage:Page {
 	}
 	
 	func tapNextCardButton() -> CardPage {
-		_ = wait(for: 0.5, before: {
-			tap(buttonWithAccessibilityIdentifier: nextCardButton)
-		})
+		tap(buttonWithAccessibilityIdentifier: nextCardButton)
 		return CardPage()
 	}
 	
@@ -50,9 +48,12 @@ class CardPage:Page {
 	}
 	
 	func tapCompleteCardButton() -> CardPage {
-		_ = wait(for: 0.5, before: {
-			tap(buttonWithAccessibilityIdentifier: completeCardButton)
-		})
+		tap(buttonWithAccessibilityIdentifier: completeCardButton)
+		return CardPage()
+	}
+	
+	func tapAddCardbutton() -> CardPage {
+		tap(buttonWithAccessibilityIdentifier: addCardButton)
 		return CardPage()
 	}
 	func getQuestionText() -> String {

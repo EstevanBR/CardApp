@@ -17,4 +17,5 @@ struct ButtonTitles {
 	static let hourglass = "⌛︎"
 	static let leftArrow = "←"
 	static let rightArrow = "→"
+	static let close = "ⅹ"
 }

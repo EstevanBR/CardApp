@@ -96,11 +96,10 @@
 		D0480F971F0723820064C217 /* CardUITests */ = {
 			isa = PBXGroup;
 			children = (
+				D0F06B3D236680C4000A7C8B /* Pages */,
 				D0480F981F0723820064C217 /* CardUITests.swift */,
 				D0480F9A1F0723820064C217 /* Info.plist */,
-				D0D9BEA123665760008A5514 /* Page.swift */,
 				D0D9BEA623666F16008A5514 /* TestLaunchArguments.swift */,
-				D0F06B3B23667C96000A7C8B /* CardPages.swift */,
 			);
 			path = CardUITests;
 			sourceTree = "<group>";
@@ -152,6 +151,15 @@
 				D06CFDF71E09DA130079D7CF /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0F06B3D236680C4000A7C8B /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				D0D9BEA123665760008A5514 /* Page.swift */,
+				D0F06B3B23667C96000A7C8B /* CardPages.swift */,
+			);
+			name = Pages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
