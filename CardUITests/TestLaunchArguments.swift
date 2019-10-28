@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+enum TestLaunchArguments:String {
+	case reset = "RESET"
+}

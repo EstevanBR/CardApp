@@ -11,10 +11,6 @@ import UIKit
 
 
 @IBDesignable class CardView: UIView {
-	func setupAccessibilityHeirarchy() {
-		// TODO: use this?
-	}
-	
 	fileprivate let kCardIndex = "kCardIndex"
 	
 	var view:UIView!
@@ -113,13 +109,12 @@ import UIKit
 	}
 	@IBAction func markAsCompleteTapped(_ sender: UIButton) {
 		if (questions.queue.count > 0) {
-			questions.done.append(questions.queue[cardIndex])
-			questions.queue.remove(at: cardIndex)
+			questions.done.append(questions.queue.popLast()!)
 		} else {
 			queueEmpty()
 		}
-		setCardIndex(to: cardIndex)
 		questions.archiveQuestions()
+		setCardIndex(to: cardIndex)
 		self.delegate?.markAsCompleteTapped(card: self)
 	}
 	@IBAction func recordTapped(_ sender: UIButton) {
