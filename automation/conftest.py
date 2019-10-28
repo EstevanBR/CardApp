@@ -1,7 +1,6 @@
 import base64
 import logging
 import socket
-import time
 from datetime import datetime
 
 import pytest
@@ -21,7 +20,14 @@ def desired_capabilities() -> dict:
         "newCommandTimeout": 10,
         "autoLaunch": False,
         "isHeadless": False,
-        "usePrebuiltWDA": False
+        "usePrebuiltWDA": True,
+        "processArguments": {
+            "args": [
+                "RESET"
+            ], "env": {
+
+            }
+        }
     }
     logging.debug(f"desired_capabilities\n{desired_capabilities}")
     return desired_capabilities
@@ -37,9 +43,9 @@ def driver(desired_capabilities: dict) -> WebDriver:
     driver = webdriver.Remote(
         command_executor=EXECUTOR,
         desired_capabilities=desired_capabilities,
-        direct_connection=True
-    )
-    logging.debug(f"created driver with desired_capabilities\n{desired_capabilities}")
+        direct_connection=True)
+    logging.debug(
+        f"created driver with desired_capabilities\n{desired_capabilities}")
 
     return driver
 
@@ -65,7 +71,7 @@ def page(driver: WebDriver) -> None:
 
 
 @pytest.fixture(scope="function", autouse=True)
-def video(driver: WebDriver, request) -> None:
+def video(driver: WebDriver, request):
     logging.debug(f"started recording video")
     driver.start_recording_screen(videoType="mpeg4", bugReport=True)
     yield

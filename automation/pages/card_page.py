@@ -19,15 +19,18 @@ class CardPage(Page):
         self.driver.find_element_by_accessibility_id(self.recordButton).click()
         return self
 
+    def tap_complete_card_button(self) -> CardPage:
+        self.driver.find_element_by_accessibility_id(self.completeCardButton).click()
+        return self
+
     def get_record_button_text(self) -> CardPage:
         self.driver.find_element_by_accessibility_id(self.recordButton).text()
         return self
 
-    def tap_play_button(self) -> PlaybackAlertPage:
-        from pages.playback_alert_page import PlaybackAlertPage
+    def tap_play_button(self) -> CardPage():
 
         self.driver.find_element_by_accessibility_id(self.playButton).click()
-        return PlaybackAlertPage()
+        return CardPage()
 
     def get_play_button_text(self) -> CardPage:
         self.driver.find_element_by_accessibility_id(self.playButton).text()

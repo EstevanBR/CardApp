@@ -1,13 +1,4 @@
-import logging
-import time
-
-import pytest
-from appium import webdriver
-from appium.webdriver import WebElement
-from appium.webdriver.webdriver import WebDriver
-
 from pages.questions_page import QuestionsPage
-from pages.card_page import CardPage
 from pages.question_cell_page import QuestionCellPage
 
 
@@ -31,7 +22,7 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
-    def test_record_and_play_default(self):
+    def test_record_and_play(self):
         (
             QuestionsPage()
             .tap_answer_cell()
@@ -39,21 +30,6 @@ class TestCardPage:
             .sleep(3)
             .tap_record_button()
             .tap_play_button()
-            .tap_default()
-            .sleep(3)
-            .tap_history_button()
-        )
-        assert QuestionsPage()
-
-    def test_record_and_play_speaker(self):
-        (
-            QuestionsPage()
-            .tap_answer_cell()
-            .tap_record_button()
-            .sleep(3)
-            .tap_record_button()
-            .tap_play_button()
-            .tap_speaker()
             .sleep(3)
             .tap_history_button()
         )
@@ -67,9 +43,21 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
+    def test_complete_question_card(self):
+        (
+            QuestionsPage()
+            .tap_answer_cell()
+            .tap_complete_card_button()
+            .dismiss_via_swipe()
+        )
+
     def test_question_cell_play_button(self):
         (
-            QuestionCellPage()
+            QuestionsPage()
+            .tap_answer_cell()
+            .tap_complete_card_button()
+            .dismiss_via_swipe()
+            .get_question_cell()
             .tap_play_button()
         )
         assert QuestionsPage()

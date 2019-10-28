@@ -18,3 +18,8 @@ class QuestionsPage(Page):
 
         QuestionCellPage().tap()
         return QuestionsPage()
+
+    def get_question_cell(self) -> QuestionCellPage:
+        from pages.question_cell_page import QuestionCellPage
+
+        return QuestionCellPage()
