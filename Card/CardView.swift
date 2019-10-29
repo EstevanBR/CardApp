@@ -109,7 +109,7 @@ import UIKit
 	}
 	@IBAction func markAsCompleteTapped(_ sender: UIButton) {
 		if (questions.queue.count > 0) {
-			questions.done.append(questions.queue.popLast()!)
+			questions.done.append(questions.queue.remove(at: cardIndex))
 		} else {
 			queueEmpty()
 		}

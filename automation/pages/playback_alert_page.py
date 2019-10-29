@@ -8,17 +8,17 @@ class PlaybackAlertPage(Page):
     class_name: str = XCUIElementType.Sheet
 
     def __init__(self):
-        self.element: WebElement = Page.driver.find_element_by_class_name(self.class_name)
-        assert self.element.is_displayed()
+        self._element: WebElement = Page.driver.find_element_by_class_name(self.class_name)
+        assert self._element.is_displayed()
 
     def tap_default(self) -> CardPage:
         from pages.card_page import CardPage
 
-        self.element.find_element_by_name("Default").click()
+        self._element.find_element_by_name("Default").click()
         return CardPage()
 
     def tap_speaker(self) -> CardPage:
         from pages.card_page import CardPage
 
-        self.element.find_element_by_name("Speaker").click()
+        self._element.find_element_by_name("Speaker").click()
         return CardPage()

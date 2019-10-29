@@ -74,23 +74,15 @@ class CardUITests: XCTestCase {
 		_ = CardPage().dismissViewSwipe()
 	}
 	
-	#if targetEnvironment(simulator)
-	func testPlay() {
-		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapPlayButton()
-	}
-	#else
 	func testPlay() {
 		_ = QuestionsPage()
 			.tapAnswerCell()
 			.tapPlayButton()
 			.tapDefault()
+			.tapStopButton()
 			.tapPlayButton()
 			.tapSpeakerButton()
 	}
-	#endif
-
 	func testRecordAndPlay() {
 		testRecord()
 		testPlay()

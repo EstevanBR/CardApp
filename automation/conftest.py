@@ -2,9 +2,11 @@ import base64
 import logging
 import socket
 from datetime import datetime
+# from unittest.mock import MagicMock
 
 import pytest
 from appium import webdriver
+# from appium.webdriver import WebElement
 from appium.webdriver.webdriver import WebDriver
 
 
@@ -17,14 +19,15 @@ def desired_capabilities() -> dict:
         "platformVersion": "13.0",
         "platformName": "iOS",
         "noReset": True,
+        "fullReset": False,
         "newCommandTimeout": 60,
         "autoLaunch": False,
-        # "isHeadless": False,
-        # "usePrebuiltWDA": False,
+        "autoAcceptAlerts": True,
         "processArguments": {
             "args": [
                 "RESET"
-            ], "env": {
+            ],
+            "env": {
 
             }
         }
@@ -43,7 +46,7 @@ def driver(desired_capabilities: dict) -> WebDriver:
     driver = webdriver.Remote(
         command_executor=EXECUTOR,
         desired_capabilities=desired_capabilities,
-        direct_connection=True)
+        direct_connection=False)
     logging.debug(
         f"created driver with desired_capabilities\n{desired_capabilities}")
 
@@ -51,9 +54,19 @@ def driver(desired_capabilities: dict) -> WebDriver:
 
 
 @pytest.fixture(scope="session", autouse=True)
+def page(driver: WebDriver) -> None:
+    from page.page import Page as Page
+    logging.debug(f"providing Page class with driver")
+    Page.inject_driver(driver)
+
+
+@pytest.fixture(scope="session", autouse=True)
 def driver_setup(driver):
     logging.debug(f"starting driver session")
-    driver.start_session(driver.desired_capabilities)
+
+    driver.terminate_app(driver.desired_capabilities["bundleId"])
+    driver.execute_script("mobile: launchApp", {"bundleId": driver.desired_capabilities["bundleId"], "arguments": driver.desired_capabilities["processArguments"]["args"]})
+    driver.execute_script("mobile: activateApp", {"bundleId": driver.desired_capabilities["bundleId"]})
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -61,13 +74,6 @@ def driver_teardown(driver):
     yield None
     logging.debug(f"ending driver session")
     driver.quit()
-
-
-@pytest.fixture(scope="session", autouse=True)
-def page(driver: WebDriver) -> None:
-    from page.page import Page as Page
-    logging.debug(f"providing Page class with driver")
-    Page.driver = driver
 
 
 @pytest.fixture(scope="function", autouse=True)

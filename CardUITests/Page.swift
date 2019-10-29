@@ -43,6 +43,10 @@ extension Page {
 		_ = app.buttons[accessibilityIdentifier].waitForExistence(timeout: 0.5)
 		app.buttons[accessibilityIdentifier].tap()
 	}
+	func tap(buttonWithName name:String) {
+		_ = app.buttons[name].waitForExistence(timeout: 0.5)
+		app.buttons[name].tap()
+	}
 	func tap(cellWithAccessibilityIdentifier accessibilityIdentifier:String) {
 		_ = app.tables.cells[accessibilityIdentifier].waitForExistence(timeout: 0.5)
 		app.tables.cells[accessibilityIdentifier].tap()

@@ -27,6 +27,11 @@ class CardPage:Page {
 		return AudioOutputPage()
 	}
 	
+	func tapStopButton() -> CardPage {
+		tap(buttonWithName: ButtonTitles.stop)
+		return CardPage()
+	}
+	
 	func tapRecordButton() -> CardPage {
 		tap(buttonWithAccessibilityIdentifier: recordButton)
 		return CardPage()
@@ -105,12 +110,13 @@ class AudioOutputPage: Page {
 		return app.sheets.firstMatch
 	}
 	func tapDefault() -> CardPage {
-		app.buttons.element(matching: NSPredicate(format: "\"\(defaultButton)\" IN titles")).tap()
-		//app.buttons[defaultButton].tap()
+		element.buttons[defaultButton].firstMatch.tap()
+
 		return CardPage()
 	}
 	func tapSpeakerButton() -> CardPage {
-		
+		element.buttons[speakerButton].firstMatch.tap()
+
 		return CardPage()
 	}
 }

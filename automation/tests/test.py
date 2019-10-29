@@ -1,8 +1,17 @@
 from pages.questions_page import QuestionsPage
-from pages.question_cell_page import QuestionCellPage
+from pages.card_page import CardPage
+from selenium.common.exceptions import ElementNotVisibleException
+import pytest
 
 
 class TestCardPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self):
+        try:
+            QuestionsPage()
+        except ElementNotVisibleException:
+            CardPage().dismiss_via_swipe()
+
     def test_get_card_page(self):
         (
             QuestionsPage()
@@ -11,10 +20,13 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
-    def test_record(self):
+    def test_record_turns_into_square(self):
         (
             QuestionsPage()
             .tap_answer_cell()
+            .get_question_text(
+                lambda card, text: card.test("?" in text)
+            )
             .tap_record_button()
             .sleep(3)
             .tap_record_button()
@@ -63,6 +75,13 @@ class TestCardPage:
         assert QuestionsPage()
 
     def test_tap_question_cell(self):
-        QuestionsPage().tap_question_cell()
-        QuestionCellPage().tap()
+        QuestionsPage().get_question_cell().tap()
         assert QuestionsPage()
+
+    def test_test(self):
+        QuestionsPage().tap_answer_cell()
+        try:
+            CardPage().test_expression(lambda card: True is False)
+        except AssertionError:
+            pytest.xfail(reason="True is not False!")
+            raise

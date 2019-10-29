@@ -3,10 +3,10 @@ from page.page import Page
 
 
 class AnswerCellPage(Page):
-    identifier: str = "AnswerCell.view"
+    _identifier: str = "AnswerCell.view"
     textLabel: str = "AnswerCell.textLabel"
 
     def tap(self) -> CardPage:
         from pages.card_page import CardPage
-        self.element.click()
+        self._element.click()
         return CardPage()
