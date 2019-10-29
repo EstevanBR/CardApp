@@ -9,20 +9,16 @@
 import XCTest
 
 class CardUITests: XCTestCase {
-	let app = XCUIApplication()
+	
 	
 	let recordingDuration:TimeInterval = 5.0
 	
     override func setUp() {
 		super.setUp()
+		let app = XCUIApplication()
 		app.launchArguments.append(TestLaunchArguments.reset.rawValue)
 		app.launch()
         continueAfterFailure = false
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-		app.terminate()
     }
 
     func testArrows() {
@@ -66,12 +62,10 @@ class CardUITests: XCTestCase {
 	func testRecord() {
 		_ = QuestionsPage()
 			.tapAnswerCell()
-			.wait(for: recordingDuration, before: {
-				_ = CardPage().tapRecordButton()
-			}, after: {
-				_ = CardPage().tapRecordButton()
-			})
-		_ = CardPage().dismissViewSwipe()
+			.tapRecordButton()
+			.wait(for: recordingDuration)
+			.tapRecordButton()
+			.dismissViewSwipe()
 	}
 	
 	func testPlay() {
@@ -113,19 +107,18 @@ class CardUITests: XCTestCase {
 	func testStopPlaying() {
 		_ = QuestionsPage()
 			.tapAnswerCell()
-			.wait(for: 8.0, before: {
-				_ = CardPage().tapRecordButton()
-			}, after: {
-				_ = CardPage().tapRecordButton()
-			})
-		_ = CardPage().wait(for: 2.0, before: {
-			_ = CardPage().tapPlayButton()
-		}, after: {
-			_ = CardPage().tapPlayButton()
-		})
+			.tapRecordButton()
+			.wait(for: recordingDuration)
+			.tapRecordButton()
+			.tapPlayButton()
+			.tapDefault()
+			.wait(for: recordingDuration * 0.25)
+			.tapStopButton()
 	}
 	
 	func testAddCardButton() {
+		let app = XCUIApplication()
+		
 		_ = QuestionsPage()
 			.tapAnswerCell()
 			.tapAddCardbutton()
@@ -139,9 +132,7 @@ class CardUITests: XCTestCase {
 		testRecord()
 		_ = QuestionsPage()
 			.tapAnswerCell()
-			.wait(for: recordingDuration, before: {
-				_ = CardPage().tapPlayButton()
-			})
-		
+			.tapPlayButton()
+			.wait(for: recordingDuration)
 	}
 }

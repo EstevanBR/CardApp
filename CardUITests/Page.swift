@@ -23,20 +23,16 @@ extension Page {
 		return app.otherElements[root]
 	}
 	
-	func wait(for duration: TimeInterval, before: ()->Void, after: ()->Void) -> Page {
-		_ = wait(for: duration, before: before)
-		after()
-		return self
-	}
-	func wait(for duration: TimeInterval, before: ()->Void) -> Page {
-		app.tap()
-		before()
-		RunLoop.current.run(until: Date.init(timeIntervalSinceNow: duration))
+	func wait(for duration: TimeInterval) -> Self {
+		
+		RunLoop.current.run(mode: .default, before: Date.init(timeIntervalSinceNow: duration))
+		
 		return self
 	}
 	
-	func test(block: ()->Bool) -> Void {
-		XCTAssert(block())
+	func test(block: (_ page: Self)->Bool) -> Self {
+		XCTAssert(block(self))
+		return self
 	}
 	
 	func tap(buttonWithAccessibilityIdentifier accessibilityIdentifier:String) {

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class CardPage:Page {
+struct CardPage:Page {
 	var root:String = "CardView.view"
 	private var prevCardButton = "CardView.prevCardButton"
 	private var nextCardButton = "CardView.nextCardButton"
@@ -76,7 +76,7 @@ class CardPage:Page {
 	}
 }
 
-class QuestionsPage: Page {
+struct QuestionsPage: Page {
 	var root: String = "QuestionsTableViewController.tableView"
 	var element: XCUIElement {
 		return app.tables[root]
@@ -101,7 +101,7 @@ class QuestionsPage: Page {
 	}
 }
 
-class AudioOutputPage: Page {
+struct AudioOutputPage: Page {
 	var root: String = "Audio Output"
 	private var defaultButton = "Default"
 	private var speakerButton = "Speaker"

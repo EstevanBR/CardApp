@@ -149,15 +149,6 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 	
 	
 	func playTapped(card: CardView) {
-		//#if targetEnvironment(simulator)
-//		do {
-//			let session = AVAudioSession.sharedInstance()
-//			try session.overrideOutputAudioPort(.speaker)
-//			self.play(card: card)
-//		} catch let error{
-//			self.showError(message: error.localizedDescription)
-//		}
-		//#else
 		if audioPlayer != nil && audioPlayer.isPlaying {
 			stopPlaying(success: true)
 			return
