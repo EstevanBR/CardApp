@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AAIDInjection
 
 class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UIGestureRecognizerDelegate {
 	var audioRecorder: AVAudioRecorder!
@@ -20,7 +21,6 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		injectAccessibilityIdentifiers()
 		
 		cardView.delegate = self
@@ -174,10 +174,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 				self.showError(message: error.localizedDescription)
 			}
 		}))
-		present(audioPlaybackAlertController, animated: false) {
-		}
 		show(audioPlaybackAlertController, sender:self)
-		//#endif
 	}
 	
 	func showError(message: String) {
@@ -210,22 +207,27 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 						card.questions.masterList.append(text)
 						card.setCardIndex(to: card.cardIndex)
 						card.questions.archiveQuestions()
-						//self.tableView.reloadData()
 					}
 				}
 			}
 		}
-		let noAction = UIAlertAction(title: "ⅹ", style: .cancel) { (action) in
+		let closeAction = UIAlertAction(title: ButtonTitles.close, style: .cancel) { (action) in
 			print("no")
 		}
 		
-		alert.addAction(noAction)
+		alert.addAction(closeAction)
 		alert.addAction(okAction)
 		
-		present(alert, animated: true) {
-			print("presented")
-		}
+		//alert.injectAccessibilityIdentifiers()
+		//show(alert, sender:self)
+//		DispatchQueue.main.async {
+//			self.present(alert, animated: true)
+//		}
+		self.present(alert, animated: true)
+		
+		
 	}
+	
 	func historyTapped(card: CardView) {
 		//performSegue(withIdentifier: questionSegue, sender: self)
 		dismiss(animated: true) {
@@ -234,6 +236,9 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 	}
 	func markAsCompleteTapped(card: CardView) {
 		//self.tableView.reloadData()
+	}
+	func queueEmpty(card: CardView) {
+		dismiss(animated: true, completion: nil)
 	}
 	// MARK: AVAudioRecorderDelegate
 	func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {

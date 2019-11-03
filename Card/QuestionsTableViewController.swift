@@ -9,28 +9,28 @@
 import Foundation
 import UIKit
 import os.log
+import AAIDInjection
 
-class QuestionsTableViewController: UITableViewController, QuestionCellDelegate, CustomReflectable {
-
-	public var customMirror: Mirror {
-		return Mirror(self, children:[
-			"tableView": tableView!
-		])
-	}
+enum SectionType:Int {
+	case answer = 0
+	case question = 1
+}
+class QuestionsTableViewController: UITableViewController, QuestionCellDelegate {
 	let questions:Questions = Questions.shared
 	let questionCell = "questionCell"
 	let answerCell = "answerCell"
+	
+	var sections:[SectionType] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		questions.register(callBack: questionsUnarchived)
 		questions.register(callBack: questionsArchived)
-		//debugAccessibility()
 		
-		//view.injectAccessibilityIdentifiers()
 		injectAccessibilityIdentifiers()
 	}
+	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
@@ -41,36 +41,52 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate,
 		self.navigationController?.setNavigationBarHidden(false, animated: false)
 	}
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		if questions.done.count > 0 {
-			return 2
-		} else {
-			return 1
-		}
-	}
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 0 {
-			return 1
-		} else {
-			return questions.done.count
+		sections = []
+		
+		if questions.queue.count > 0 {
+			sections.append(SectionType.answer)
 		}
 		
+		if questions.done.count > 0 {
+			sections.append(SectionType.question)
+		}
+		
+		return sections.count
+	}
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		
+		var rows:Int = 0
+		
+		if sections[section] == SectionType.answer {
+			rows = (questions.queue.count > 1) ? 1 : 0
+		} else if sections[section] == SectionType.question {
+			rows =  questions.done.count
+		}
+		
+		return rows;
 	}
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 1 {
-			let cell:QuestionCell = (tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as? QuestionCell)!
+		
+		if sections[indexPath.section] == SectionType.answer {
+			let cell:AnswerCell = tableView.dequeueReusableCell(withIdentifier: answerCell, for: indexPath) as! AnswerCell
+			return cell
+		} else if sections[indexPath.section] == SectionType.question {
+			let cell:QuestionCell = tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as! QuestionCell
 			cell.questionLabel.text = questions.done[indexPath.row]
 			cell.delegate = self
-			cell.injectAccessibilityIdentifiers()
-			return cell
-		} else {
-			let cell:AnswerCell = (tableView.dequeueReusableCell(withIdentifier: answerCell, for: indexPath) as? AnswerCell)!
-			cell.injectAccessibilityIdentifiers()
 			return cell
 		}
+		
+		return UITableViewCell()
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return ["QUESTION","ANSWERS"][section]
+		if sections[section] == SectionType.answer {
+			return "QUESTION"
+		} else if sections[section] == SectionType.question {
+			return "ANSWERS"
+		}
+		return ""
 	}
 	
 	func playTapped(questionCell: QuestionCell) {
@@ -89,7 +105,9 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate,
 }
 
 class QuestionCell: UITableViewCell {
-	
+//	var view:UIView! {
+//		return self.contentView
+//	}
 	@IBOutlet var questionLabel:UILabel!
 	@IBOutlet var playButton:UIButton!
 	
@@ -97,15 +115,10 @@ class QuestionCell: UITableViewCell {
 	@IBAction func playTapped(_ sender: UIButton) {
 		self.delegate?.playTapped(questionCell: self)
 	}
-}
-
-extension QuestionCell: CustomReflectable {
-	var customMirror: Mirror {
-		return Mirror(self, children:[
-			"view":self,
-			"questionLabel":questionLabel!,
-			"playButton":playButton!
-		])
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		injectAccessibilityIdentifiers()
 	}
 }
 
@@ -113,11 +126,9 @@ protocol QuestionCellDelegate {
 	func playTapped(questionCell: QuestionCell)
 }
 
-class AnswerCell:UITableViewCell,CustomReflectable {
-	var customMirror: Mirror {
-		return Mirror(self, children:[
-			"view":self,
-			"textLabel":textLabel!
-		])
+class AnswerCell:UITableViewCell {
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		injectAccessibilityIdentifiers()
 	}
 }

@@ -4,12 +4,11 @@ from xcui_element.xcui_element_types import XCUIElementType
 
 
 class PlaybackAlertPage(Page):
-    name: str = "Audio Ouput"
-    class_name: str = XCUIElementType.Sheet
+    _name: str = "Audio Ouput"
+    _class_name: str = XCUIElementType.Sheet
 
     def __init__(self):
         self._element: WebElement = Page.driver.find_element_by_class_name(self.class_name)
-        assert self._element.is_displayed()
 
     def tap_default(self) -> CardPage:
         from pages.card_page import CardPage

@@ -3,7 +3,7 @@ from page.page import Page
 
 
 class AnswerCellPage(Page):
-    _identifier: str = "AnswerCell.view"
+    _identifier: str = "AnswerCell"
     textLabel: str = "AnswerCell.textLabel"
 
     def tap(self) -> CardPage:

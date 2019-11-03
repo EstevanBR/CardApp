@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension ProcessInfo {
 	var isReset: Bool {
-		os_log(.default, log: .aaid, "%s", "ProcessInfo.isReset")
+		os_log(.default, log: .default, "%s", "ProcessInfo.isReset")
 		return arguments.contains(TestLaunchArguments.reset.rawValue)
 	}
 }

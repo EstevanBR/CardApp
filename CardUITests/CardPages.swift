@@ -57,15 +57,17 @@ struct CardPage:Page {
 		return CardPage()
 	}
 	
-	func tapAddCardbutton() -> CardPage {
+	func tapAddCardbutton() -> AddCardPage {
 		tap(buttonWithAccessibilityIdentifier: addCardButton)
+		return AddCardPage()
+	}
+	func getQuestionText(with: (String)->()) -> CardPage {
+		with(element.staticTexts[questionLabel].label)
 		return CardPage()
 	}
-	func getQuestionText() -> String {
-		return element.staticTexts[questionLabel].label
-	}
-	func getCurrentCardNumber() -> Int {
-		return Int(element.staticTexts[currentCardLabel].label)!
+	func getCurrentCardNumber(with: (Int)->()) -> CardPage {
+		with(Int(element.staticTexts[currentCardLabel].label)!)
+		return CardPage()
 	}
 	func getCompletedCardsCount() -> Int {
 		return Int(element.staticTexts[completedLabel].label.split(separator: " ").last!)!
@@ -77,14 +79,14 @@ struct CardPage:Page {
 }
 
 struct QuestionsPage: Page {
-	var root: String = "QuestionsTableViewController.tableView"
+	var root: String = "QuestionsTableViewController.view"
 	var element: XCUIElement {
 		return app.tables[root]
 	}
 	
-	private var questionCell = "QuestionCell.view"
+	private var questionCell = "QuestionCell"
 	private var questionCellPlayButton = "QuestionCell.playButton"
-	private var answerCell = "AnswerCell.view"
+	private var answerCell = "AnswerCell"
 	
 	func tapAnswerCell() -> CardPage{
 		tap(cellWithAccessibilityIdentifier: answerCell)
@@ -118,5 +120,30 @@ struct AudioOutputPage: Page {
 		element.buttons[speakerButton].firstMatch.tap()
 
 		return CardPage()
+	}
+}
+
+struct AddCardPage: Page {
+	var root: String = ButtonTitles.add
+	private var okButton:String = ButtonTitles.checkmark
+	private var closeButton:String = ButtonTitles.close
+	
+	var element: XCUIElement {
+		return app.alerts[root].firstMatch
+	}
+	
+	func tapOkButton() -> CardPage {
+		element.buttons[okButton].firstMatch.tap()
+		return CardPage()
+	}
+	
+	func tapCloseButton() -> CardPage {
+		element.buttons[closeButton].firstMatch.tap()
+		return CardPage()
+	}
+	
+	func enterQuestionText(text:String) -> AddCardPage {
+		element.textFields.firstMatch.typeText(text)
+		return AddCardPage()
 	}
 }

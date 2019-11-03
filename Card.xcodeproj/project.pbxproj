@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D0142DD8236296C200FCB76C /* UIView+AAID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142DD7236296C200FCB76C /* UIView+AAID.swift */; };
 		D023D6FA2319FE0E00EAC9DA /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3DD952314BCA40076372D /* Accessibility.swift */; platformFilter = ios; };
 		D023D6FC231A033E00EAC9DA /* ButtonTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */; };
 		D023D6FE231A05C400EAC9DA /* CardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0480F981F0723820064C217 /* CardUITests.swift */; platformFilter = ios; };
@@ -28,6 +27,7 @@
 		D0D9BEA823666F39008A5514 /* TestLaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D9BEA623666F16008A5514 /* TestLaunchArguments.swift */; };
 		D0F06B3C23667C96000A7C8B /* CardPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F06B3B23667C96000A7C8B /* CardPages.swift */; };
 		D0F396D81E1489C400E8020A /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F396D71E1489C400E8020A /* Questions.swift */; };
+		D0FAAB36236E3A6A005710CD /* AAIDInjection in Frameworks */ = {isa = PBXBuildFile; productRef = D0FAAB35236E3A6A005710CD /* AAIDInjection */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +40,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D0343D83236BD6CB00D4F273 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		D0142DD7236296C200FCB76C /* UIView+AAID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AAID.swift"; sourceTree = "<group>"; };
 		D023D6FB231A033E00EAC9DA /* ButtonTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTitles.swift; sourceTree = "<group>"; };
 		D023D700231A24A200EAC9DA /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsTableViewController.swift; sourceTree = "<group>"; };
 		D023D703231A24E000EAC9DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Card/Base.lproj/QuestionsTableViewController.storyboard; sourceTree = "<group>"; };
@@ -79,20 +91,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D9BEA3236659AC008A5514 /* AVFoundation.framework in Frameworks */,
+				D0FAAB36236E3A6A005710CD /* AAIDInjection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D0142DD6236296A400FCB76C /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				D0142DD7236296C200FCB76C /* UIView+AAID.swift */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
 		D0480F971F0723820064C217 /* CardUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,7 +131,6 @@
 		D06CFDE31E09D9D20079D7CF /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				D0142DD6236296A400FCB76C /* Categories */,
 				D023D705231B77FA00EAC9DA /* CardViewController.storyboard */,
 				D023D702231A24E000EAC9DA /* QuestionsTableViewController.storyboard */,
 				D06CFDE41E09D9D20079D7CF /* AppDelegate.swift */,
@@ -190,12 +194,16 @@
 				D06CFDDD1E09D9D10079D7CF /* Sources */,
 				D06CFDDE1E09D9D10079D7CF /* Frameworks */,
 				D06CFDDF1E09D9D10079D7CF /* Resources */,
+				D0343D83236BD6CB00D4F273 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Card;
+			packageProductDependencies = (
+				D0FAAB35236E3A6A005710CD /* AAIDInjection */,
+			);
 			productName = Card;
 			productReference = D06CFDE11E09D9D20079D7CF /* Card.app */;
 			productType = "com.apple.product-type.application";
@@ -235,6 +243,9 @@
 				Base,
 			);
 			mainGroup = D06CFDD81E09D9D10079D7CF;
+			packageReferences = (
+				D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */,
+			);
 			productRefGroup = D06CFDE21E09D9D20079D7CF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -289,7 +300,6 @@
 				D06CFDE71E09D9D20079D7CF /* CardViewController.swift in Sources */,
 				D06CFDFC1E0A0DED0079D7CF /* CardView.swift in Sources */,
 				D06CFDE51E09D9D20079D7CF /* AppDelegate.swift in Sources */,
-				D0142DD8236296C200FCB76C /* UIView+AAID.swift in Sources */,
 				D0D3DD962314BCA40076372D /* Accessibility.swift in Sources */,
 				D023D6FC231A033E00EAC9DA /* ButtonTitles.swift in Sources */,
 				D0D9BEA823666F39008A5514 /* TestLaunchArguments.swift in Sources */,
@@ -550,6 +560,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EstevanBR/AAIDInjection";
+			requirement = {
+				kind = revision;
+				revision = 0cf81f7b9b222f8817d91c98875db27e002bbf89;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D0FAAB35236E3A6A005710CD /* AAIDInjection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */;
+			productName = AAIDInjection;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D06CFDD91E09D9D10079D7CF /* Project object */;
 }

@@ -3,7 +3,7 @@ from page.page import Page
 
 
 class QuestionCellPage(Page):
-    _identifier: str = "QuestionCell.view"
+    _identifier: str = "QuestionCell"
     questionLabel: str = "QuestionCell.questionLabel"
     playButton: str = "QuestionCell.playButton"
 

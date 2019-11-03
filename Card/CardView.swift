@@ -32,7 +32,6 @@ import UIKit
 	
 	var delegate:CardDelegate?
 	
-	
 	func xibSetup() {
 		
 		view = loadViewFromNib()
@@ -40,23 +39,23 @@ import UIKit
 		view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
 		view.layer.shadowOffset = CGSize(width: 5.0, height: 5.0);
 		view.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-		view.layer.cornerRadius = 3
+		view.layer.cornerRadius = 16
 		// for grey circles
-		/*
-		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton]
+		
+		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton, historyButton, addCardButton]
 		for button in buttons {
 			button?.layer.cornerRadius = 15.0
 			button?.layer.borderColor = UIColor.black.withAlphaComponent(0.05).cgColor
 			button?.layer.borderWidth = 1.0
 		}
-		*/
+		
 		questions.register(callBack: questionsUnarchived)
 		questions.register(callBack: questionsArchived)
 		questions.unarchiveQuestions()
 		
 		setCardIndex(to: 0)
 		addSubview(view)
-
+		
 		injectAccessibilityIdentifiers()
 	}
 	func loadViewFromNib() -> UIView {
@@ -153,6 +152,7 @@ import UIKit
 		self.recordButton.isEnabled = false
 		self.playButton.isEnabled = false
 		self.completeCardButton.isEnabled = false
+		self.delegate?.queueEmpty(card: self)
 	}
 }
 
@@ -162,4 +162,5 @@ protocol CardDelegate {
 	func addTapped(card: CardView)
 	func historyTapped(card: CardView)
 	func markAsCompleteTapped(card: CardView)
+	func queueEmpty(card: CardView)
 }

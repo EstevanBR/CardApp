@@ -13,8 +13,8 @@ class CardPage(Page):
     completeCardButton: str = "CardView.completeCardButton"
     recordButton: str = "CardView.recordButton"
     playButton: str = "CardView.playButton"
-    historyButton: str = "CardView.historyButton"
-    addCardButton: str = "CardView.addCardButton"
+    # historyButton: str = "CardView.historyButton"
+    # addCardButton: str = "CardView.addCardButton"
 
     def tap_record_button(self) -> CardPage:
         Page.find_element_by_accessibility_id(self.recordButton).click()
@@ -36,11 +36,11 @@ class CardPage(Page):
         Page.find_element_by_accessibility_id(self.playButton).text()
         return CardPage()
 
-    def tap_history_button(self) -> CardPage:
-        from pages.questions_page import QuestionsPage
+    # def tap_history_button(self) -> CardPage:
+    #     from pages.questions_page import QuestionsPage
 
-        Page.find_element_by_accessibility_id(self.historyButton).click()
-        return QuestionsPage()
+    #     Page.find_element_by_accessibility_id(self.historyButton).click()
+    #     return QuestionsPage()
 
     def dismiss_via_swipe(self) -> QuestionsPage:
         from pages.questions_page import QuestionsPage
@@ -48,6 +48,6 @@ class CardPage(Page):
         self._swipe_down()
         return QuestionsPage()
 
-    def get_question_text(self, text_callback: Callable[[CardPage, str]]) -> CardPage:
-        text_callback(self, Page.find_element_by_accessibility_id(self.questionLabel).text)
+    def get_question_text(self, text_callback: Callable[[str]]) -> CardPage:
+        text_callback(Page.find_element_by_accessibility_id(self.questionLabel).text)
         return CardPage()

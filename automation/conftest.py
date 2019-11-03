@@ -6,7 +6,6 @@ from datetime import datetime
 
 import pytest
 from appium import webdriver
-# from appium.webdriver import WebElement
 from appium.webdriver.webdriver import WebDriver
 
 
@@ -47,6 +46,7 @@ def driver(desired_capabilities: dict) -> WebDriver:
         command_executor=EXECUTOR,
         desired_capabilities=desired_capabilities,
         direct_connection=False)
+    driver.implicitly_wait(8)
     logging.debug(
         f"created driver with desired_capabilities\n{desired_capabilities}")
 
