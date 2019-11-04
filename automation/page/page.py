@@ -6,7 +6,6 @@ from appium.webdriver import WebElement
 from appium.webdriver.webdriver import WebDriver
 from selenium.common.exceptions import ElementNotVisibleException
 from typing import Callable
-from test_report.test_report import TestReport
 
 
 class Error(Exception):
@@ -14,7 +13,7 @@ class Error(Exception):
     pass
 
 
-class PageNotFound(Error):
+class PageObjectNotFound(Error):
     """Exception raised for errors in the input.
 
     Attributes:
@@ -76,7 +75,7 @@ class Page:
             else:
                 raise MissingParam()
         except ElementNotVisibleException:
-            raise PageNotFound()
+            raise PageObjectNotFound()
 
     @classmethod
     def find_element_by_accessibility_id(cls, accessibility_id) -> WebElement:
@@ -88,12 +87,3 @@ class Page:
 
     def _swipe_down(self):
         Page.__driver.execute_script("mobile: swipe", {"direction": "down"})
-    
-
-    # def test(self, value: bool) -> Page:
-    #     assert value is True
-    #     return self
-
-    # def test_expression(self, expression: Callable[[Page], bool]) -> Page:
-    #     assert expression(self)
-    #     return self

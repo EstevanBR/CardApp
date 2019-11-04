@@ -1,6 +1,6 @@
 from pages.questions_page import QuestionsPage
 from pages.card_page import CardPage
-from page.page import PageNotFound
+from page.page import PageObjectNotFound
 from test_report.test_report import TestReport
 import pytest
 
@@ -21,7 +21,7 @@ def report_tests(test_report: TestReport) -> None:
 def setup():
     try:
         QuestionsPage()
-    except PageNotFound:
+    except PageObjectNotFound:
         CardPage().dismiss_via_swipe()
 
 
