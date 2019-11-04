@@ -122,12 +122,12 @@ import UIKit
 	@IBAction func playTapped(_ sender: UIButton) {
 		self.delegate?.playTapped(card: self)
 	}
-	@IBAction func addTapped(_ sender: UIButton) {
-		self.delegate?.addTapped(card: self)
-	}
-	@IBAction func historyTapped(_ sender: UIButton) {
-		self.delegate?.historyTapped(card: self)
-	}
+//	@IBAction func addTapped(_ sender: UIButton) {
+//		self.delegate?.addTapped(card: self)
+//	}
+//	@IBAction func historyTapped(_ sender: UIButton) {
+//		self.delegate?.historyTapped(card: self)
+//	}
 	// MARK: Questions Delegate
 	func questionsArchived() {
 		UserDefaults.standard.setValue(cardIndex, forKey: kCardIndex)
@@ -159,8 +159,8 @@ import UIKit
 protocol CardDelegate {
 	func recordTapped(card: CardView)
 	func playTapped(card: CardView)
-	func addTapped(card: CardView)
-	func historyTapped(card: CardView)
+	//func addTapped(card: CardView)
+	//func historyTapped(card: CardView)
 	func markAsCompleteTapped(card: CardView)
 	func queueEmpty(card: CardView)
 }

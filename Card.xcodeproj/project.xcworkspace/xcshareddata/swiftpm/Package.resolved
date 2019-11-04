@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AAIDInjection",
+        "repositoryURL": "https://github.com/EstevanBR/AAIDInjection",
+        "state": {
+          "branch": null,
+          "revision": "0cf81f7b9b222f8817d91c98875db27e002bbf89",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -193,47 +193,47 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 		}
 	}
 	
-	func addTapped(card: CardView) {
-		let alert = UIAlertController(title: ButtonTitles.add, message: "", preferredStyle: .alert)
-		alert.addTextField { (textField) in
-			textField.placeholder = "?"
-		}
-		let okAction = UIAlertAction(title: ButtonTitles.checkmark, style: .default) { (action) in
-			if let textFields = alert.textFields {
-				if textFields.count > 0 {
-					if let text = textFields[0].text {
-						print("ok, adding: \(text)")
-						card.questions.queue.insert(text, at: card.cardIndex)
-						card.questions.masterList.append(text)
-						card.setCardIndex(to: card.cardIndex)
-						card.questions.archiveQuestions()
-					}
-				}
-			}
-		}
-		let closeAction = UIAlertAction(title: ButtonTitles.close, style: .cancel) { (action) in
-			print("no")
-		}
-		
-		alert.addAction(closeAction)
-		alert.addAction(okAction)
-		
-		//alert.injectAccessibilityIdentifiers()
-		//show(alert, sender:self)
-//		DispatchQueue.main.async {
-//			self.present(alert, animated: true)
+//	func addTapped(card: CardView) {
+//		let alert = UIAlertController(title: ButtonTitles.add, message: "", preferredStyle: .alert)
+//		alert.addTextField { (textField) in
+//			textField.placeholder = "?"
 //		}
-		self.present(alert, animated: true)
-		
-		
-	}
+//		let okAction = UIAlertAction(title: ButtonTitles.checkmark, style: .default) { (action) in
+//			if let textFields = alert.textFields {
+//				if textFields.count > 0 {
+//					if let text = textFields[0].text {
+//						print("ok, adding: \(text)")
+//						card.questions.queue.insert(text, at: card.cardIndex)
+//						card.questions.masterList.append(text)
+//						card.setCardIndex(to: card.cardIndex)
+//						card.questions.archiveQuestions()
+//					}
+//				}
+//			}
+//		}
+//		let closeAction = UIAlertAction(title: ButtonTitles.close, style: .cancel) { (action) in
+//			print("no")
+//		}
+//
+//		alert.addAction(closeAction)
+//		alert.addAction(okAction)
+//
+//		//alert.injectAccessibilityIdentifiers()
+//		//show(alert, sender:self)
+////		DispatchQueue.main.async {
+////			self.present(alert, animated: true)
+////		}
+//		self.present(alert, animated: true)
+//
+//
+//	}
 	
-	func historyTapped(card: CardView) {
-		//performSegue(withIdentifier: questionSegue, sender: self)
-		dismiss(animated: true) {
-			Questions.shared.unarchiveQuestions()
-		}
-	}
+//	func historyTapped(card: CardView) {
+//		//performSegue(withIdentifier: questionSegue, sender: self)
+//		dismiss(animated: true) {
+//			Questions.shared.unarchiveQuestions()
+//		}
+//	}
 	func markAsCompleteTapped(card: CardView) {
 		//self.tableView.reloadData()
 	}
