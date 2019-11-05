@@ -39,6 +39,7 @@ class Questions: NSCoding {
 		self.queue = aQueue
 		self.done = aDone
 		self.masterList = aMaster
+		
 	}
 	func filePath(withComponent component: String)->String {
 		let manager = FileManager.default

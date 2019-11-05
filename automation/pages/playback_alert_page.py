@@ -1,11 +1,17 @@
 from __future__ import annotations
+
+from typing import Tuple
+
+from appium.webdriver.common.mobileby import MobileBy
+
 from page.page import Page as Page
-from xcui_element.xcui_element_types import XCUIElementType
+# from xcui_element.xcui_element_types import XCUIElementType
 
 
 class PlaybackAlertPage(Page):
-    _name: str = "Audio Ouput"
-    _class_name: str = XCUIElementType.Sheet
+    _root: Tuple[MobileBy, str] = (MobileBy.NAME, "Audio Output")
+
+    # _class_name: str = XCUIElementType.Sheet
 
     def tap_default(self) -> CardPage:
         from pages.card_page import CardPage

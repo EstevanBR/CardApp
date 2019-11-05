@@ -1,9 +1,11 @@
 from __future__ import annotations
 from page.page import Page as Page
+from typing import Tuple
+from appium.webdriver.common.mobileby import MobileBy
 
 
 class QuestionsPage(Page):
-    _identifier: str = "QuestionsTableViewController.view"
+    _root: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "QuestionsTableViewController.view")
 
     def tap_answer_cell(self) -> AnswerCellPage:
         from pages.card_page import CardPage

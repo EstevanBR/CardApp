@@ -27,8 +27,8 @@ import UIKit
 	@IBOutlet var completeCardButton:UIButton!
 	@IBOutlet var recordButton:UIButton!
 	@IBOutlet var playButton:UIButton!
-	@IBOutlet var historyButton:UIButton!
-	@IBOutlet weak var addCardButton: UIButton!
+//	@IBOutlet var historyButton:UIButton!
+//	@IBOutlet weak var addCardButton: UIButton!
 	
 	var delegate:CardDelegate?
 	
@@ -42,7 +42,7 @@ import UIKit
 		view.layer.cornerRadius = 16
 		// for grey circles
 		
-		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton, historyButton, addCardButton]
+		let buttons = [prevCardButton, nextCardButton, completeCardButton, recordButton, playButton]
 		for button in buttons {
 			button?.layer.cornerRadius = 15.0
 			button?.layer.borderColor = UIColor.black.withAlphaComponent(0.05).cgColor

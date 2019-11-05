@@ -23,20 +23,20 @@ class CardUITests: XCTestCase {
 
     func testArrows() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapNextCardButton()
-			.tapNextCardButton()
-			.tapNextCardButton()
-			.tapNextCardButton()
-			.tapNextCardButton()
-			.tapNextCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
-			.tapPreviousCardButton()
+		.tapAnswerCell()
+		.tapNextCardButton()
+		.tapNextCardButton()
+		.tapNextCardButton()
+		.tapNextCardButton()
+		.tapNextCardButton()
+		.tapNextCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
+		.tapPreviousCardButton()
     }
 	
 	func testQuestionTextChangesWhenTappingArrows() {
@@ -44,44 +44,49 @@ class CardUITests: XCTestCase {
 		var secondQuestionText:String!
 		
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.getQuestionText(with: { (text) in
-				firstQuestionText = text
-			})
-			.tapNextCardButton()
-			.getQuestionText(with: { (text) in
-				secondQuestionText = text
-			})
+		.tapAnswerCell()
+		.getQuestionText(with: { (text) in
+			firstQuestionText = text
+		})
+		.tapNextCardButton()
+		.getQuestionText(with: { (text) in
+			secondQuestionText = text
+		})
 		
 		XCTAssertNotEqual(firstQuestionText, secondQuestionText, "Question text did not change")
 	}
 	
 	func testCompletedCardsCountChangesWhenCompletingCard() {
-		let beforeCount:Int = QuestionsPage()
-			.tapAnswerCell()
-			.getCompletedCardsCount()
-		let afterCount:Int = CardPage()
-			.tapCompleteCardButton()
-			.getCompletedCardsCount()
+		var beforeCount:Int!
+		var afterCount:Int!
+		
+		_ = QuestionsPage()
+		.tapAnswerCell()
+		.getCompletedCardsCount(with: { (count) in
+			beforeCount = count
+		}).tapCompleteCardButton()
+		.getCompletedCardsCount(with: { (count) in
+			afterCount = count
+		})
 		XCTAssertGreaterThan(afterCount, beforeCount, "Completed count did not change")
 	}
 	func testRecord() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapRecordButton()
-			.wait(for: recordingDuration)
-			.tapRecordButton()
-			.dismissViewSwipe()
+		.tapAnswerCell()
+		.tapRecordButton()
+		.wait(for: recordingDuration)
+		.tapRecordButton()
+		.dismissViewSwipe()
 	}
 	
 	func testPlay() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapPlayButton()
-			.tapDefault()
-			.tapStopButton()
-			.tapPlayButton()
-			.tapSpeakerButton()
+		.tapAnswerCell()
+		.tapPlayButton()
+		.tapDefault()
+		.tapStopButton()
+		.tapPlayButton()
+		.tapSpeakerButton()
 	}
 	func testRecordAndPlay() {
 		testRecord()
@@ -90,8 +95,8 @@ class CardUITests: XCTestCase {
 	
 	func testMarkCardAsCompleted() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapCompleteCardButton()
+		.tapAnswerCell()
+		.tapCompleteCardButton()
 	}
 	
 	func testAppStates() {
@@ -104,103 +109,43 @@ class CardUITests: XCTestCase {
 		app.activate()
 	}
 	
-//	func testHistoryButton() {
-//		_ = QuestionsPage()
-//			.tapAnswerCell()
-//			.tapHistoryButton()
-//	}
-	
 	func testStopPlaying() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapRecordButton()
-			.wait(for: recordingDuration)
-			.tapRecordButton()
-			.tapPlayButton()
-			.tapDefault()
-			.wait(for: recordingDuration * 0.25)
-			.tapStopButton()
+		.tapAnswerCell()
+		.tapRecordButton()
+		.wait(for: recordingDuration)
+		.tapRecordButton()
+		.tapPlayButton()
+		.tapDefault()
+		.wait(for: recordingDuration * 0.25)
+		.tapStopButton()
 	}
-	
-//	func testAddCardButton() {
-//		let app = XCUIApplication()
-//		
-//		_ = QuestionsPage()
-//			.tapAnswerCell()
-//			.tapAddCardbutton()
-//		
-//		XCTAssertEqual(app.alerts.firstMatch.label, ButtonTitles.add)
-//		XCTAssertTrue(app.alerts.firstMatch.buttons[ButtonTitles.checkmark].exists)
-//		XCTAssertTrue(app.alerts.firstMatch.buttons[ButtonTitles.close].exists)
-//	}
 	
 	func testFinishPlaying() {
 		testRecord()
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapPlayButton()
-			.tapDefault()
-			.wait(for: recordingDuration + 1)
+		.tapAnswerCell()
+		.tapPlayButton()
+		.tapDefault()
+		.wait(for: recordingDuration + 1)
 	}
 	
 	func testCompleteAllQuestions() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.getCurrentCardNumber(with: { (number) in
-				for _ in 1...number {
-					 _ = CardPage().tapCompleteCardButton()
-				}
-			})
+		.tapAnswerCell()
+		.getCurrentCardNumber(with: { (number) in
+			for _ in 1...number {
+				 _ = CardPage().tapCompleteCardButton()
+			}
+		})
 		XCTAssertNoThrow(QuestionsPage())
-	}
-	
-	func testQuestionCellPlayButton() {
-		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapRecordButton()
-			.wait(for: recordingDuration)
-			.tapRecordButton()
-			.tapCompleteCardButton()
-			.dismissViewSwipe()
-			.tapQuestionCellPlayButton()
 	}
 	
 	func testTapHistoryWhileRecording() {
 		_ = QuestionsPage()
-			.tapAnswerCell()
-			.tapRecordButton()
-			.dismissViewSwipe()
-			.tapAnswerCell()
-	}
-	
-//	func testAddCard() {
-//		var beforeCardCount:Int = 0
-//		var afterCardCount:Int = 0
-//		
-//		let newQuestionText = "Test Add Card?"
-//		
-//		var beforeQuestionText:String!
-//		var afterQuestionText:String!
-//		_ = QuestionsPage()
-//			.tapAnswerCell()
-//			.getCurrentCardNumber(with: { (cardCount) in
-//				beforeCardCount = cardCount
-//			})
-//			.getQuestionText(with: { (text) in
-//				beforeQuestionText = text
-//			})
-//			.tapAddCardbutton()
-//			.enterQuestionText(text: newQuestionText)
-//			.tapOkButton()
-//			.getQuestionText(with: { (text) in
-//				afterQuestionText = text
-//			})
-//			.getCurrentCardNumber(with: { (cardCount) in
-//				afterCardCount = cardCount
-//			})
-//		
-//		XCTAssertEqual(afterQuestionText, newQuestionText)
-//		XCTAssertNotEqual(beforeQuestionText, afterQuestionText)
-//		XCTAssertGreaterThan(afterCardCount, beforeCardCount)
-//	}
+		.tapAnswerCell()
+		.tapRecordButton()
+		.dismissViewSwipe()
+		.tapAnswerCell()
+	}	
 }

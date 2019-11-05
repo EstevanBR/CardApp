@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import time
+from typing import Tuple
 
 from appium.webdriver import WebElement
+from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.webdriver import WebDriver
 from selenium.common.exceptions import ElementNotVisibleException
-from typing import Callable
 
 
 class Error(Exception):
@@ -44,42 +45,26 @@ class Page:
 
     Attributes:
         __driver: Webdriver
-        _identifier: str -- the accessibility identifier used to find the element
-        _name: str -- the name used to find the element
-        _class_name: str -- the class_name used to find the element
-        _custom: Callable[WebDriver, [WebElement]] -- custom callable to find the element
-            usage: self._custom = lambda driver: driver.find_element_by_xpath()
+        _root: Tuple[MobileBy, str] -- the strategy used to find the elemend
         _element: WebElement -- the underlying WebElementObject
     """
+    _root: Tuple[MobileBy, str]
     __driver: WebDriver
-    _identifier: str
-    _name: str
-    _class_name: str
-    _custom: Callable[WebDriver, [WebElement]]
     _element: WebElement
 
     @classmethod
     def inject_driver(cls, driver: WebDriver):
         cls.__driver = driver
 
+    @classmethod
+    def find_element(cls, strategy: Tuple[MobileBy, str]) -> WebElement:
+        return Page.__driver.find_element(*strategy)
+
     def __init__(self):
         try:
-            if self._identifier is not None:
-                self._element: WebElement = Page.__driver.find_element_by_accessibility_id(self._identifier)
-            elif self._name is not None:
-                self._element: WebElement = Page.__driver.find_element_by_name(self._name)
-            elif self._classname is not None:
-                self._element: WebElement = Page.__driver.find_element_by_classname(self._classname)
-            elif self._custom is not None:
-                self._element = _custom(Page.__driver)
-            else:
-                raise MissingParam()
+            self._element: WebElement = Page.__driver.find_element(*self._root)
         except ElementNotVisibleException:
             raise PageObjectNotFound()
-
-    @classmethod
-    def find_element_by_accessibility_id(cls, accessibility_id) -> WebElement:
-        return cls.__driver.find_element_by_accessibility_id(accessibility_id)
 
     def sleep(self, duration: float):
         time.sleep(duration)

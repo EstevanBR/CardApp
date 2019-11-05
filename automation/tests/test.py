@@ -1,31 +1,26 @@
-from pages.questions_page import QuestionsPage
-from pages.card_page import CardPage
-from page.page import PageObjectNotFound
-from test_report.test_report import TestReport
 import pytest
+from page.page import PageObjectNotFound
+from pages.card_page import CardPage
+from pages.questions_page import QuestionsPage
+from pages.answer_cell_page import AnswerCellPage
+from test_report.test_report import TestReport
 
 
-@pytest.fixture(scope="function", autouse=False)
-def test_report() -> TestReport:
-    return TestReport()
+@pytest.fixture(scope="session", autouse=True)
+def desired_capabilities(desired_capabilities: dict) -> dict:
+    desired_capabilities["noReset"] = False
+    return desired_capabilities
 
 
-@pytest.fixture(scope="function", autouse=True)
-def report_tests(test_report: TestReport) -> None:
-    yield None
-    test_report.finalize()
-    assert test_report.passed() is True
-
-
-@pytest.fixture(scope="function", autouse=True)
-def setup():
-    try:
-        QuestionsPage()
-    except PageObjectNotFound:
-        CardPage().dismiss_via_swipe()
-
-
+@pytest.mark.ios
 class TestCardPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self):
+        try:
+            QuestionsPage()
+        except PageObjectNotFound:
+            CardPage().dismiss_via_swipe()
+
     def test_get_card_page(self):
         (
             QuestionsPage()
@@ -34,7 +29,8 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
-    def test_record_turns_into_square(self, test_report):
+    @pytest.mark.audio
+    def test_record_turns_into_square(self, test_report: TestReport):
         (
             QuestionsPage()
             .tap_answer_cell()
@@ -45,16 +41,17 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
-    def test_card_has_question_mark(self, test_report):
+    def test_card_has_question_mark(self, test_report: TestReport):
         (
             QuestionsPage()
             .tap_answer_cell()
             .get_question_text(
-                lambda text: test_report.soft_assert("?" in text, "KEY-123", "Questions have '?'")
+                lambda text: test_report.soft_assert("?" in text, "HW-000", "Questions have a '?'")
             )
         )
         assert QuestionsPage()
 
+    @pytest.mark.audio
     def test_record_and_play(self):
         (
             QuestionsPage()
@@ -84,18 +81,28 @@ class TestCardPage:
             .dismiss_via_swipe()
         )
 
-    def test_question_cell_play_button(self):
+    def test_tap_question_cell(self):
         (
             QuestionsPage()
-            .tap_answer_cell()
-            .tap_complete_card_button()
-            .dismiss_via_swipe()
             .get_question_cell()
-            .tap_play_button()
+            .tap()
         )
         assert QuestionsPage()
 
-    def test_tap_question_cell(self):
-        QuestionsPage().get_question_cell().tap()
-        assert QuestionsPage()
+    @pytest.mark.audio
+    def test_dismiss_while_recording(self):
+        (
+            QuestionsPage()
+            .tap_answer_cell()
+            .tap_record_button()
+            .sleep(1)
+            .dismiss_via_swipe()
+        )
 
+    def test_answer_cell_has_answer_a_question_text(self, test_report: TestReport):
+        (
+            AnswerCellPage()
+            .get_answer_cell_text(
+                lambda text: test_report.soft_assert("Answer a Question" == text, "HW-001", "Answer cell text should be 'Answer a Question'")
+            )
+        )

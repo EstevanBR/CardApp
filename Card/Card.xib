@@ -9,11 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardView" customModule="Card" customModuleProvider="target">
             <connections>
-                <outlet property="addCardButton" destination="mG3-AN-UJI" id="b4B-oV-CpZ"/>
                 <outlet property="completeCardButton" destination="vCR-lQ-8pQ" id="Fdx-Ga-hGn"/>
                 <outlet property="completedLabel" destination="316-yb-4kd" id="4YP-up-RYV"/>
                 <outlet property="currentCardLabel" destination="dNN-Jd-UyR" id="Pgp-3A-NJc"/>
-                <outlet property="historyButton" destination="SQx-No-q4c" id="2D8-Ue-2cH"/>
                 <outlet property="nextCardButton" destination="1BS-UQ-9LU" id="xzc-ue-aNh"/>
                 <outlet property="playButton" destination="wvI-co-DsE" id="d7M-fE-AnT"/>
                 <outlet property="prevCardButton" destination="BsM-Pl-OmE" id="geI-MV-HJw"/>
@@ -142,9 +140,6 @@
                         <constraint firstAttribute="height" constant="30" id="qIN-Ez-MgY"/>
                     </constraints>
                     <state key="normal" title="+"/>
-                    <connections>
-                        <action selector="addTapped:" destination="-1" eventType="touchUpInside" id="IXy-Y5-Mxf"/>
-                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wdb-cm-5UN">
                     <rect key="frame" x="47" y="54" width="0.0" height="30"/>
@@ -162,9 +157,6 @@
                         <constraint firstAttribute="width" constant="30" id="Ht2-3l-1Qx"/>
                     </constraints>
                     <state key="normal" title="⌛︎"/>
-                    <connections>
-                        <action selector="historyTapped:" destination="-1" eventType="touchUpInside" id="gls-aO-d2V"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

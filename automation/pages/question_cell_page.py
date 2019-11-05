@@ -1,20 +1,15 @@
 from __future__ import annotations
 from page.page import Page
+from typing import Tuple
+from appium.webdriver.common.mobileby import MobileBy
 
 
 class QuestionCellPage(Page):
-    _identifier: str = "QuestionCell"
-    questionLabel: str = "QuestionCell.questionLabel"
-    playButton: str = "QuestionCell.playButton"
+    _root: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "QuestionCell")
+    __questionLabel: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "QuestionCell.questionLabel")
 
     def tap(self) -> QuestionsPage:
         from pages.questions_page import QuestionsPage
 
         self._element.click()
-        return QuestionsPage()
-
-    def tap_play_button(self) -> QuestionsPage:
-        from pages.questions_page import QuestionsPage
-
-        Page.find_element_by_accessibility_id(self.playButton).click()
         return QuestionsPage()

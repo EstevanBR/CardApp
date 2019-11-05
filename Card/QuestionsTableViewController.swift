@@ -15,7 +15,7 @@ enum SectionType:Int {
 	case answer = 0
 	case question = 1
 }
-class QuestionsTableViewController: UITableViewController, QuestionCellDelegate {
+class QuestionsTableViewController: UITableViewController {
 	let questions:Questions = Questions.shared
 	let questionCell = "questionCell"
 	let answerCell = "answerCell"
@@ -73,7 +73,7 @@ class QuestionsTableViewController: UITableViewController, QuestionCellDelegate 
 		} else if sections[indexPath.section] == SectionType.question {
 			let cell:QuestionCell = tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as! QuestionCell
 			cell.questionLabel.text = questions.done[indexPath.row]
-			cell.delegate = self
+//			cell.delegate = self
 			return cell
 		}
 		
@@ -109,12 +109,12 @@ class QuestionCell: UITableViewCell {
 //		return self.contentView
 //	}
 	@IBOutlet var questionLabel:UILabel!
-	@IBOutlet var playButton:UIButton!
+	//@IBOutlet var playButton:UIButton!
 	
-	var delegate: QuestionCellDelegate?
-	@IBAction func playTapped(_ sender: UIButton) {
-		self.delegate?.playTapped(questionCell: self)
-	}
+	//var delegate: QuestionCellDelegate?
+//	@IBAction func playTapped(_ sender: UIButton) {
+//		self.delegate?.playTapped(questionCell: self)
+//	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -122,11 +122,12 @@ class QuestionCell: UITableViewCell {
 	}
 }
 
-protocol QuestionCellDelegate {
-	func playTapped(questionCell: QuestionCell)
-}
+//protocol QuestionCellDelegate {
+//	func playTapped(questionCell: QuestionCell)
+//}
 
 class AnswerCell:UITableViewCell {
+	@IBOutlet weak var actionLabel: UILabel!
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		injectAccessibilityIdentifiers()
