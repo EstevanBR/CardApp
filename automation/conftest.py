@@ -29,12 +29,12 @@ def deviceName() -> str:
 
 @pytest.fixture(scope="session", autouse=True)
 def udid() -> str:
-    return "1BDA0BD6-A0F6-4C4F-AF7D-94F3EDDDE29A"
+    return "E66E2326-AEE4-482A-9B40-4C6C6F75563C"
 
 
 @pytest.fixture(scope="session", autouse=True)
 def platformVersion() -> str:
-    return "13.0"
+    return "13.2"
 
 
 @pytest.fixture(scope="session", autouse=True)
