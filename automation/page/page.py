@@ -72,3 +72,12 @@ class Page:
 
     def _swipe_down(self):
         Page.__driver.execute_script("mobile: swipe", {"direction": "down"})
+
+    def _swipe_up(self):
+        Page.__driver.execute_script("mobile: swipe", {"direction": "up"})
+
+    def _swipe_left(self):
+        Page.__driver.execute_script("mobile: swipe", {"direction": "left"})
+
+    def _swipe_right(self):
+        Page.__driver.execute_script("mobile: swipe", {"direction": "right"})
