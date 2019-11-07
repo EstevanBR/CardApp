@@ -1,7 +1,9 @@
 import pytest
 import logging
+import time
 from unittest.mock import MagicMock
 from page.page import Page
+from report.report import Report
 from appium.webdriver.webdriver import WebDriver
 
 
@@ -19,9 +21,9 @@ def mock(pytestconfig) -> None:
     Page.find_element = MagicMock()
     # Page.find_element.text = MagicMock(return_value="")
 
-    TestReport.passed = MagicMock(return_value=True)
-    TestReport.finalize = MagicMock()
-    TestReport.soft_assert = MagicMock()
+    Report.passed = MagicMock(return_value=True)
+    Report.finalize = MagicMock()
+    Report.soft_assert = MagicMock()
 
     time.sleep = MagicMock(return_value=None)
 
