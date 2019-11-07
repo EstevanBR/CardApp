@@ -6,7 +6,3 @@ pytest_plugins = [
     "fixtures.report",
     "fixtures.video"
 ]
-
-
-def pytest_addoption(parser):
-    parser.addoption("--mock", dest="mock", action="store_true")

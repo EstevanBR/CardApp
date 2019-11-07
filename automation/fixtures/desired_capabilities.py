@@ -1,9 +1,14 @@
 import pytest
 import logging
 
-"""
-Default desired_capabilities fixtures
-"""
+
+def pytest_addoption(parser):
+    parser.addoption("--deviceName", dest="deviceName", action="store", required=True)
+    parser.addoption("--udid", dest="udid", action="store", required=True)
+    parser.addoption("--platformVersion", dest="platformVersion", action="store", required=True)
+    parser.addoption("--wdaLocalPort", dest="wdaLocalPort", action="store", required=True)
+
+
 @pytest.fixture(scope="session", autouse=False)
 def bundleId() -> str:
     return "com.toiletsnakes.Card"
@@ -12,21 +17,6 @@ def bundleId() -> str:
 @pytest.fixture(scope="session", autouse=False)
 def app() -> str:
     return "/Users/ehernandez/Desktop/Build/Products/Debug-iphonesimulator/Card.app/"
-
-
-@pytest.fixture(scope="session", autouse=False)
-def deviceName() -> str:
-    return "iPhone 8"
-
-
-@pytest.fixture(scope="session", autouse=False)
-def udid() -> str:
-    return "E66E2326-AEE4-482A-9B40-4C6C6F75563C"
-
-
-@pytest.fixture(scope="session", autouse=False)
-def platformVersion() -> str:
-    return "13"
 
 
 @pytest.fixture(scope="session", autouse=False)
@@ -53,20 +43,19 @@ def fullReset() -> bool:
 def desired_capabilities(
     bundleId: str,
     app: str,
-    deviceName: str,
-    udid: str,
-    platformVersion: str,
     platformName: str,
     noReset: bool,
     fullReset: bool,
-    derivedDataPath: str
+    derivedDataPath: str,
+    pytestconfig
 ) -> dict:
     desired_capabilities = {
         "bundleId": bundleId,
         "app": app,
-        "deviceName": deviceName,
-        "udid": udid,
-        "platformVersion": platformVersion,
+        "deviceName": pytestconfig.option.deviceName,
+        "udid": pytestconfig.option.udid,
+        "platformVersion": pytestconfig.option.platformVersion,
+        "wdaLocalPort": pytestconfig.option.wdaLocalPort,
         "platformName": platformName,
         "noReset": noReset,
         "fullReset": fullReset,

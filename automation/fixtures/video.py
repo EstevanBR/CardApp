@@ -5,11 +5,18 @@ from datetime import datetime
 from appium.webdriver.webdriver import WebDriver
 
 
+# def pytest_addoption(parser):
+#     parser.addoption("--video", dest="video", default=False, action="store_true", required=False)
+
+
 @pytest.fixture(scope="function", autouse=True)
-def video(driver: WebDriver, request):
+def video(driver: WebDriver, request, pytestconfig):
+    # if pytestconfig.option.video is False:
+    #     return
     logging.debug(f"started recording video")
     driver.start_recording_screen(videoType="mpeg4", bugReport=True)
-    yield
+
+    yield None
 
     now = datetime.now()
     date_string = now.strftime("%Y-%m-%d_%H:%M:%S")
