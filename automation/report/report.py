@@ -2,7 +2,7 @@ from typing import List
 import logging
 
 
-class TestReport:
+class Report:
     failures: List[str]
     errors: dict
     successes: List[str]
@@ -12,16 +12,11 @@ class TestReport:
         self.successes = []
         self.failures = []
 
-    def report(self, key: str, status: bool, message: str = None):
-        if status is True:
-            self.successes.append(key)
-        else:
-            self.failures.append(key)
-
-    def soft_assert(self, test_expression: bool, key: str, message: str):
+    def soft_assert(self, statement: bool, key: str, message: str):
         try:
-            assert test_expression
-        except AssertionError:
+            assert statement
+        except AssertionError as e:
+            logging.info(e)
             self.failures.append(key)
             if message is not None:
                 self.errors[key] = message
@@ -32,4 +27,9 @@ class TestReport:
         return len(self.failures) == 0
 
     def finalize(self):
-        logging.info(f"\nsuccesses: {self.successes}\nfailures: {self.failures}\nerrors: {self.errors}")
+        if self.successes != []:
+            logging.info(f"\nsuccesses: {self.successes}")
+        if self.failures != []:
+            logging.error(f"failures: {self.failures}")
+        if self.errors != {}:
+            logging.error(f"errors: {self.errors}")

@@ -3,13 +3,7 @@ from page.page import PageObjectNotFound
 from pages.card_page import CardPage
 from pages.questions_page import QuestionsPage
 from pages.answer_cell_page import AnswerCellPage
-from test_report.test_report import TestReport
-
-
-@pytest.fixture(scope="session", autouse=True)
-def desired_capabilities(desired_capabilities: dict) -> dict:
-    desired_capabilities["noReset"] = False
-    return desired_capabilities
+from report.report import Report
 
 
 @pytest.mark.ios
@@ -30,7 +24,7 @@ class TestCardPage:
         assert QuestionsPage()
 
     @pytest.mark.audio
-    def test_record_turns_into_square(self, test_report: TestReport):
+    def test_record_turns_into_square(self, report: Report):
         (
             QuestionsPage()
             .tap_answer_cell()
@@ -41,12 +35,12 @@ class TestCardPage:
         )
         assert QuestionsPage()
 
-    def test_card_has_question_mark(self, test_report: TestReport):
+    def test_card_has_question_mark(self, report: Report):
         (
             QuestionsPage()
             .tap_answer_cell()
             .get_question_text(
-                lambda text: test_report.soft_assert("?" in text, "HW-000", "Questions have a '?'")
+                lambda text: report.soft_assert("?" in text, "HW-000", "Questions have a '?'")
             )
         )
         assert QuestionsPage()
@@ -99,10 +93,10 @@ class TestCardPage:
             .dismiss_via_swipe()
         )
 
-    def test_answer_cell_has_answer_a_question_text(self, test_report: TestReport):
+    def test_answer_cell_has_answer_a_question_text(self, report: Report):
         (
             AnswerCellPage()
             .get_answer_cell_text(
-                lambda text: test_report.soft_assert("Answer a Question" == text, "HW-001", "Answer cell text should be 'Answer a Question'")
+                lambda text: report.soft_assert("Answer a Question" == text, "HW-001", "Answer cell text should be 'Answer a Question'")
             )
         )
