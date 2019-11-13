@@ -2,11 +2,11 @@
   "object": {
     "pins": [
       {
-        "package": "AAIDInjection",
-        "repositoryURL": "https://github.com/EstevanBR/AAIDInjection",
+        "package": "AAII",
+        "repositoryURL": "https://github.com/EstevanBR/AAII.git",
         "state": {
           "branch": "master",
-          "revision": "dce9b4c4c4f5853c66d6d0e36ca9d3285eb15b05",
+          "revision": "243e1ca082f9e421874e17111724319f94db0925",
           "version": null
         }
       }

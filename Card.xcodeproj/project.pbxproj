@@ -20,6 +20,7 @@
 		D06CFDEF1E09D9D20079D7CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D06CFDED1E09D9D20079D7CF /* LaunchScreen.storyboard */; };
 		D06CFDFA1E0A0DD20079D7CF /* Card.xib in Resources */ = {isa = PBXBuildFile; fileRef = D06CFDF91E0A0DD20079D7CF /* Card.xib */; };
 		D06CFDFC1E0A0DED0079D7CF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CFDFB1E0A0DED0079D7CF /* CardView.swift */; };
+		D0C0C8C4237BE78200C1DE2C /* AAII in Frameworks */ = {isa = PBXBuildFile; productRef = D0C0C8C3237BE78200C1DE2C /* AAII */; };
 		D0D37160236FFF2500EAED7C /* QuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3715F236FFF2500EAED7C /* QuestionsTests.swift */; };
 		D0D3DD962314BCA40076372D /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3DD952314BCA40076372D /* Accessibility.swift */; };
 		D0D9BEA223665760008A5514 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D9BEA123665760008A5514 /* Page.swift */; };
@@ -28,7 +29,6 @@
 		D0D9BEA823666F39008A5514 /* TestLaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D9BEA623666F16008A5514 /* TestLaunchArguments.swift */; };
 		D0F06B3C23667C96000A7C8B /* CardPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F06B3B23667C96000A7C8B /* CardPages.swift */; };
 		D0F396D81E1489C400E8020A /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F396D71E1489C400E8020A /* Questions.swift */; };
-		D0FAAB36236E3A6A005710CD /* AAIDInjection in Frameworks */ = {isa = PBXBuildFile; productRef = D0FAAB35236E3A6A005710CD /* AAIDInjection */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,8 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C0C8C4237BE78200C1DE2C /* AAII in Frameworks */,
 				D0D9BEA3236659AC008A5514 /* AVFoundation.framework in Frameworks */,
-				D0FAAB36236E3A6A005710CD /* AAIDInjection in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +231,7 @@
 			);
 			name = Card;
 			packageProductDependencies = (
-				D0FAAB35236E3A6A005710CD /* AAIDInjection */,
+				D0C0C8C3237BE78200C1DE2C /* AAII */,
 			);
 			productName = Card;
 			productReference = D06CFDE11E09D9D20079D7CF /* Card.app */;
@@ -295,7 +295,7 @@
 			);
 			mainGroup = D06CFDD81E09D9D10079D7CF;
 			packageReferences = (
-				D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */,
+				D0C0C8C2237BE78200C1DE2C /* XCRemoteSwiftPackageReference "AAII" */,
 			);
 			productRefGroup = D06CFDE21E09D9D20079D7CF /* Products */;
 			projectDirPath = "";
@@ -698,9 +698,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */ = {
+		D0C0C8C2237BE78200C1DE2C /* XCRemoteSwiftPackageReference "AAII" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/EstevanBR/AAIDInjection";
+			repositoryURL = "https://github.com/EstevanBR/AAII.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -709,10 +709,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D0FAAB35236E3A6A005710CD /* AAIDInjection */ = {
+		D0C0C8C3237BE78200C1DE2C /* AAII */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0FAAB34236E3A6A005710CD /* XCRemoteSwiftPackageReference "AAIDInjection" */;
-			productName = AAIDInjection;
+			package = D0C0C8C2237BE78200C1DE2C /* XCRemoteSwiftPackageReference "AAII" */;
+			productName = AAII;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

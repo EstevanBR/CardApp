@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import os.log
-import AAIDInjection
+import AAII
 
 enum SectionType:Int {
 	case answer = 0
@@ -69,10 +69,12 @@ class QuestionsTableViewController: UITableViewController {
 		
 		if sections[indexPath.section] == SectionType.answer {
 			let cell:AnswerCell = tableView.dequeueReusableCell(withIdentifier: answerCell, for: indexPath) as! AnswerCell
+			cell.injectAccessibilityIdentifiers()
 			return cell
 		} else if sections[indexPath.section] == SectionType.question {
 			let cell:QuestionCell = tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as! QuestionCell
 			cell.questionLabel.text = questions.done[indexPath.row]
+			cell.injectAccessibilityIdentifiers()
 //			cell.delegate = self
 			return cell
 		}
@@ -105,31 +107,9 @@ class QuestionsTableViewController: UITableViewController {
 }
 
 class QuestionCell: UITableViewCell {
-//	var view:UIView! {
-//		return self.contentView
-//	}
 	@IBOutlet var questionLabel:UILabel!
-	//@IBOutlet var playButton:UIButton!
-	
-	//var delegate: QuestionCellDelegate?
-//	@IBAction func playTapped(_ sender: UIButton) {
-//		self.delegate?.playTapped(questionCell: self)
-//	}
-	
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		injectAccessibilityIdentifiers()
-	}
 }
-
-//protocol QuestionCellDelegate {
-//	func playTapped(questionCell: QuestionCell)
-//}
 
 class AnswerCell:UITableViewCell {
 	@IBOutlet weak var actionLabel: UILabel!
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		injectAccessibilityIdentifiers()
-	}
 }

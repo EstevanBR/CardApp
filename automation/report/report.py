@@ -1,5 +1,5 @@
-from typing import List
 import logging
+from typing import List
 
 
 class Report:
@@ -12,14 +12,21 @@ class Report:
         self.successes = []
         self.failures = []
 
+    def _handle_assertion_error(self, e: AssertionError, key: str, message: str):
+        logging.error(e)
+
+        self.failures.append(key)
+
+        self.errors[key] = self.errors.get(key, [])
+
+        if message is not None:
+            self.errors[key].append(message)
+
     def soft_assert(self, statement: bool, key: str, message: str):
         try:
             assert statement
         except AssertionError as e:
-            logging.info(e)
-            self.failures.append(key)
-            if message is not None:
-                self.errors[key] = message
+            self._handle_assertion_error(e, key, message)
         else:
             self.successes.append(key)
 

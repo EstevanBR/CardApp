@@ -1,5 +1,7 @@
 import pytest
-from report.repot import Report
+import sys
+
+from report.report import Report
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -32,13 +34,13 @@ class TestReport:
         assert len(report.failures) == 1
 
     @pytest.mark.xfail(reason="True is not False")
-    def test_errors(self, report):
+    def test_errors(self, report: Report):
         report.soft_assert(True is False, "KEY-0004", "True should be false")
 
         assert len(report.errors) == 1
 
     @pytest.mark.xfail(reason="True is really actually not False")
-    def test_all(self, report):
+    def test_all(self, report: Report):
         report.soft_assert(True is True, "KEY-0001", "True is True")
         report.soft_assert(True is True, "KEY-0002", "True is True")
         report.soft_assert(True is False, "KEY-0003", "True should be false")

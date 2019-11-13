@@ -40,7 +40,7 @@ class TestCardPage:
             QuestionsPage()
             .tap_answer_cell()
             .get_question_text(
-                lambda text: report.soft_assert("?" in text, "HW-000", "Questions have a '?'")
+                lambda text: report.soft_assert("?" in text, "HW-000", "Questions should have a '?'")
             )
         )
         assert QuestionsPage()

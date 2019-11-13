@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import AAIDInjection
+import AAII
 
 class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, CardDelegate, UIGestureRecognizerDelegate {
 	var audioRecorder: AVAudioRecorder!
