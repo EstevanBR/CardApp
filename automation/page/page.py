@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import time
-from typing import Tuple
+from typing import Tuple, Callable
 
 from appium.webdriver import WebElement
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.webdriver import WebDriver
-from selenium.common.exceptions import ElementNotVisibleException
+
+TextCallback = Callable[[str], None]
+Strategy = Tuple[MobileBy, str]
 
 
 class Error(Exception):
@@ -45,26 +47,16 @@ class Page:
 
     Attributes:
         __driver: Webdriver
-        _root: Tuple[MobileBy, str] -- the strategy used to find the elemend
-        _element: WebElement -- the underlying WebElementObject
     """
-    _root: Tuple[MobileBy, str]
     __driver: WebDriver
-    _element: WebElement
 
     @classmethod
     def inject_driver(cls, driver: WebDriver):
         cls.__driver = driver
 
     @classmethod
-    def find_element(cls, strategy: Tuple[MobileBy, str]) -> WebElement:
+    def find_element(cls, strategy: Strategy) -> WebElement:
         return Page.__driver.find_element(*strategy)
-
-    def __init__(self):
-        try:
-            self._element: WebElement = Page.__driver.find_element(*self._root)
-        except ElementNotVisibleException:
-            raise PageObjectNotFound()
 
     def sleep(self, duration: float):
         time.sleep(duration)

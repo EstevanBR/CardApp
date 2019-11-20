@@ -1,11 +1,16 @@
 from __future__ import annotations
 from page.page import Page as Page
-from typing import Tuple
 from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.webelement import WebElement
 
 
 class QuestionsPage(Page):
-    _root: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "QuestionsTableViewController.view")
+    @property
+    def __view(self) -> WebElement:
+        return Page.find_element((MobileBy.ACCESSIBILITY_ID, "QuestionsTableViewController.view"))
+
+    def __init__(self):
+        assert self.__view.is_displayed()
 
     def tap_answer_cell(self) -> AnswerCellPage:
         from pages.card_page import CardPage

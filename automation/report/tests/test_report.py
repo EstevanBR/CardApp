@@ -1,5 +1,4 @@
 import pytest
-import sys
 
 from report.report import Report
 

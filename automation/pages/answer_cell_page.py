@@ -1,18 +1,26 @@
 from __future__ import annotations
-from page.page import Page
-from typing import Tuple
+from page.page import Page, TextCallback
 from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.webelement import WebElement
 
 
 class AnswerCellPage(Page):
-    _root: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "AnswerCell")
-    __textLabel: Tuple[MobileBy, str] = (MobileBy.ACCESSIBILITY_ID, "AnswerCell.actionLabel")
+    @property
+    def __cell(self) -> WebElement:
+        return Page.find_element((MobileBy.ACCESSIBILITY_ID, "AnswerCell"))
+
+    @property
+    def __textLabel(self) -> WebElement:
+        return Page.find_element((MobileBy.ACCESSIBILITY_ID, "AnswerCell.actionLabel"))
+
+    def __init__(self):
+        assert self.__cell.is_displayed()
 
     def tap(self) -> CardPage:
         from pages.card_page import CardPage
-        self._element.click()
+        self.__cell.click()
         return CardPage()
 
-    def get_answer_cell_text(self, text_callback: Callable[[str]]) -> AnswerCellPage:
-        text_callback(Page.find_element(self.__textLabel).text)
+    def get_answer_cell_text(self, text_callback: TextCallback) -> AnswerCellPage:
+        text_callback(self.__textLabel.text)
         return AnswerCellPage()
