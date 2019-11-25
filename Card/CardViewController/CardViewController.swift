@@ -21,7 +21,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		injectAccessibilityIdentifiers()
+		
 		
 		cardView.delegate = self
 		cardView.layer.cornerRadius = 16.0
@@ -47,6 +47,7 @@ class CardViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlay
 			alert = UIAlertController(title: "Error!", message: "Failed to record", preferredStyle: UIAlertController.Style.alert)
 			show(alert, sender: self)
 		}
+		injectAccessibilityIdentifiers()
 		
 	}
 	override func viewWillAppear(_ animated: Bool) {

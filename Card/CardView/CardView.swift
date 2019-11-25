@@ -57,6 +57,7 @@ import UIKit
 		addSubview(view)
 		
 		injectAccessibilityIdentifiers()
+		view.injectAccessibilityIdentifiers()
 	}
 	func loadViewFromNib() -> UIView {
 		let bundle = Bundle(for: type(of: self))
