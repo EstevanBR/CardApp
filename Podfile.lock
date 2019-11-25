@@ -1,0 +1,21 @@
+PODS:
+  - AAII (0.0.2)
+
+DEPENDENCIES:
+  - AAII (from `https://github.com/EstevanBR/AAII.git`)
+
+EXTERNAL SOURCES:
+  AAII:
+    :git: https://github.com/EstevanBR/AAII.git
+
+CHECKOUT OPTIONS:
+  AAII:
+    :commit: 21b729326f9417ab96fc489b139a2c38da32a210
+    :git: https://github.com/EstevanBR/AAII.git
+
+SPEC CHECKSUMS:
+  AAII: 928697d429c863df51d9e5337e26dd9f2c07db01
+
+PODFILE CHECKSUM: 6f92406a353c980c75b89fee778db5b8fd4b6c15
+
+COCOAPODS: 1.8.4

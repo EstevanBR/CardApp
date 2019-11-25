@@ -75,7 +75,6 @@ class QuestionsTableViewController: UITableViewController {
 			let cell:QuestionCell = tableView.dequeueReusableCell(withIdentifier: questionCell, for: indexPath) as! QuestionCell
 			cell.questionLabel.text = questions.done[indexPath.row]
 			cell.injectAccessibilityIdentifiers()
-//			cell.delegate = self
 			return cell
 		}
 		

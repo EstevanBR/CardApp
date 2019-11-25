@@ -60,7 +60,7 @@ import UIKit
 	}
 	func loadViewFromNib() -> UIView {
 		let bundle = Bundle(for: type(of: self))
-		let nib = UINib(nibName: "Card", bundle: bundle)
+		let nib = UINib(nibName: "CardView", bundle: bundle)
 		let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
 		return view
 	}
